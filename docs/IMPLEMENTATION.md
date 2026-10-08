@@ -18,7 +18,7 @@
   * the 512 px Play Store icon.
   The background is the navy `ic_launcher_background` color.
 * **Not used:** Navigation (one screen, FR-6.1), a DI framework, Room, Firebase, analytics, image or animation libraries.
-* **Release build:** R8 with `isShrinkResources` (release APK ≈ 1.7 MB). For now it is signed with the debug key so it can be installed for M1; the Play upload key replaces it before M3 (§7). *Not built yet:* the `:baselineprofile` module (§5), so there is no app-specific Baseline Profile so far, only the ones the AndroidX libraries ship.
+* **Release build:** R8 with `isShrinkResources` (release APK ≈ 1.7 MB). It is signed with the Play upload key, read from `~/.gradle/gradle.properties` and kept outside the repo, or with the debug key on a machine without it (§7). *Not built yet:* the `:baselineprofile` module (§5), so there is no app-specific Baseline Profile so far, only the ones the AndroidX libraries ship.
 * **applicationId:** `dev.sumbee`. Confirm it before M3, because it can't change once published.
 * **No backup:** `allowBackup="false"` and data-extraction rules that exclude everything. Without them, Android's auto-backup would copy the child's name to the parent's Google Drive, against `VISION.md` §6.
 
@@ -163,6 +163,7 @@ All text lives in `strings.xml`, with placeholders such as `results_title_named 
 ## 7. Build & Release
 
 * **M1:** a `debug` APK installed by `adb install` on the child's device.
+* **Signing:** `bundleRelease` signs the AAB with the upload key (`SUMBEE_UPLOAD_*` properties, see README). Play App Signing holds the app signing key, so builds installed from Play carry Google's certificate, not the upload key's.
 * **M3:** a signed release AAB with Play App Signing, and Families program enrollment:
   * target age 5–12;
   * Data Safety: no data collected or shared;

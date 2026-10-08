@@ -20,14 +20,30 @@ android {
         compose = true
     }
 
+    // The Play upload key lives outside the repo; its path and passwords come from
+    // ~/.gradle/gradle.properties (README "Release signing"). Google re-signs with the app signing
+    // key it holds (Play App Signing).
+    val uploadStore = providers.gradleProperty("SUMBEE_UPLOAD_STORE_FILE").orNull
+    signingConfigs {
+        if (uploadStore != null) {
+            create("upload") {
+                storeFile = file(uploadStore)
+                storePassword = providers.gradleProperty("SUMBEE_UPLOAD_STORE_PASSWORD").get()
+                keyAlias = providers.gradleProperty("SUMBEE_UPLOAD_KEY_ALIAS").get()
+                keyPassword = providers.gradleProperty("SUMBEE_UPLOAD_KEY_PASSWORD").get()
+            }
+        }
+    }
+
     buildTypes {
         release {
             // FR-7: small APK and fast start — R8 with resource shrinking.
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
-            // Signed with the debug key until the Play upload key exists (IMPLEMENTATION.md §7).
-            signingConfig = signingConfigs.getByName("debug")
+            // The upload key when this machine has it; otherwise the debug key, which still installs
+            // for family use but which Play rejects.
+            signingConfig = signingConfigs.findByName("upload") ?: signingConfigs.getByName("debug")
         }
     }
     compileOptions {
