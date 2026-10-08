@@ -6,12 +6,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -34,6 +36,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -44,6 +48,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.unit.Constraints
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.sumbee.R
@@ -71,32 +79,35 @@ fun SetupContent(
         Modifier
             .fillMaxSize()
             .pointerInput(Unit) { detectTapGestures { focus.clearFocus() } } // FR-1.1: tap outside closes the keyboard
-            .padding(start = 24.dp, end = 24.dp, top = 28.dp, bottom = 24.dp),
+            .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 24.dp),
     ) {
-        Column(
-            Modifier.weight(1f).verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(26.dp),
-        ) {
-            Header()
-            NameField(config.name, onName, onDone = { focus.clearFocus() })
-            SliderBlock(
-                label = stringResource(R.string.range_label),
-                value = config.maxNumber,
-                range = SessionConfig.MIN_MAX..SessionConfig.MAX_MAX,
-                steps = (SessionConfig.MAX_MAX - SessionConfig.MIN_MAX) / SessionConfig.MAX_STEP - 1,
-                ticks = listOf(SessionConfig.MIN_MAX, SessionConfig.MAX_MAX),
-                onChange = { v -> onMaxNumber((v / SessionConfig.MAX_STEP).roundToInt() * SessionConfig.MAX_STEP) },
-            )
-            OpsBlock(config.ops, onToggleOp)
-            SliderBlock(
-                label = stringResource(R.string.cards_label),
-                value = config.cardCount,
-                range = SessionConfig.CARD_COUNTS.first()..SessionConfig.CARD_COUNTS.last(),
-                steps = SessionConfig.CARD_COUNTS.size - 2,
-                ticks = SessionConfig.CARD_COUNTS,
-                onChange = { v -> onCardCount(SessionConfig.CARD_COUNTS.minBy { abs(it - v) }) },
-            )
-            Spacer(Modifier.height(4.dp))
+        // FR-6.3: no scrolling on a 5" phone. The gaps close up from 26 dp to 12 dp to fit; the scroll
+        // is only a fallback for large font scales.
+        BoxWithConstraints(Modifier.weight(1f)) {
+            Column(
+                Modifier.verticalScroll(rememberScrollState()).heightIn(min = maxHeight),
+                verticalArrangement = FlexibleGaps(min = 12.dp, max = 26.dp),
+            ) {
+                Header()
+                NameField(config.name, onName, onDone = { focus.clearFocus() })
+                SliderBlock(
+                    label = stringResource(R.string.range_label),
+                    value = config.maxNumber,
+                    range = SessionConfig.MIN_MAX..SessionConfig.MAX_MAX,
+                    steps = (SessionConfig.MAX_MAX - SessionConfig.MIN_MAX) / SessionConfig.MAX_STEP - 1,
+                    ticks = listOf(SessionConfig.MIN_MAX, SessionConfig.MAX_MAX),
+                    onChange = { v -> onMaxNumber((v / SessionConfig.MAX_STEP).roundToInt() * SessionConfig.MAX_STEP) },
+                )
+                OpsBlock(config.ops, onToggleOp)
+                SliderBlock(
+                    label = stringResource(R.string.cards_label),
+                    value = config.cardCount,
+                    range = SessionConfig.CARD_COUNTS.first()..SessionConfig.CARD_COUNTS.last(),
+                    steps = SessionConfig.CARD_COUNTS.size - 2,
+                    ticks = SessionConfig.CARD_COUNTS,
+                    onChange = { v -> onCardCount(SessionConfig.CARD_COUNTS.minBy { abs(it - v) }) },
+                )
+            }
         }
         Spacer(Modifier.height(16.dp))
         ChunkyButton(
@@ -105,7 +116,7 @@ fun SetupContent(
             base = Palette.SunShadow,
             radius = 24.dp,
             depth = 6.dp,
-            modifier = Modifier.fillMaxWidth().height(90.dp),
+            modifier = Modifier.fillMaxWidth().height(80.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(stringResource(R.string.start), style = valueStyle)
@@ -175,9 +186,9 @@ private fun SliderBlock(
     onChange: (Float) -> Unit,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-        Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.SpaceBetween) {
-            Text(label, style = labelStyle, modifier = Modifier.padding(bottom = 6.dp))
-            Text(value.toString(), style = valueStyle)
+        Row(Modifier.fillMaxWidth().padding(bottom = 6.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(label, style = labelStyle, modifier = Modifier.alignByBaseline())
+            Text(value.toString(), style = valueStyle, modifier = Modifier.digitsOnly(valueStyle.fontSize).alignByBaseline())
         }
         val colors = SliderDefaults.colors(
             thumbColor = Palette.Ink,
@@ -252,4 +263,32 @@ private fun OpsBlock(selected: Set<Operation>, onToggle: (Operation) -> Unit) {
             }
         }
     }
+}
+
+/** Gaps of [min] that grow up to [max] when the column has height to spare. */
+@Suppress("FunctionName")
+private fun FlexibleGaps(min: Dp, max: Dp) = object : Arrangement.Vertical {
+    override val spacing = min
+
+    override fun Density.arrange(totalSize: Int, sizes: IntArray, outPositions: IntArray) {
+        val gap = ((totalSize - sizes.sum()) / (sizes.size - 1).coerceAtLeast(1)).coerceIn(min.roundToPx(), max.roundToPx())
+        var y = 0
+        sizes.forEachIndexed { i, size ->
+            outPositions[i] = y
+            y += size + gap
+        }
+    }
+}
+
+/**
+ * Lays out a line of Baloo 2 digits at the height of the digits alone. Baloo's line box is 1.602 em
+ * (ascent 1.078, descent 0.524) for digits 0.602 em tall standing on the baseline, so a big number
+ * would otherwise cost almost three times its visible height. Keeps the baseline for alignment.
+ */
+private fun Modifier.digitsOnly(fontSize: TextUnit) = layout { measurable, constraints ->
+    val placeable = measurable.measure(constraints.copy(minHeight = 0, maxHeight = Constraints.Infinity))
+    val em = fontSize.toPx()
+    val top = ((1.078f - 0.602f) * em).roundToInt()
+    val height = (0.602f * em).roundToInt()
+    layout(placeable.width, height, mapOf(FirstBaseline to height)) { placeable.place(0, -top) }
 }
