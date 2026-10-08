@@ -36,8 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.FirstBaseline
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -48,10 +46,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.sumbee.R
@@ -278,17 +274,4 @@ private fun FlexibleGaps(min: Dp, max: Dp) = object : Arrangement.Vertical {
             y += size + gap
         }
     }
-}
-
-/**
- * Lays out a line of Baloo 2 digits at the height of the digits alone. Baloo's line box is 1.602 em
- * (ascent 1.078, descent 0.524) for digits 0.602 em tall standing on the baseline, so a big number
- * would otherwise cost almost three times its visible height. Keeps the baseline for alignment.
- */
-private fun Modifier.digitsOnly(fontSize: TextUnit) = layout { measurable, constraints ->
-    val placeable = measurable.measure(constraints.copy(minHeight = 0, maxHeight = Constraints.Infinity))
-    val em = fontSize.toPx()
-    val top = ((1.078f - 0.602f) * em).roundToInt()
-    val height = (0.602f * em).roundToInt()
-    layout(placeable.width, height, mapOf(FirstBaseline to height)) { placeable.place(0, -top) }
 }
