@@ -117,7 +117,7 @@ object DeckGenerator {
         val candidates = pool.filter { it != lastCanonical && trivialOk(it) }
         return when {
             candidates.isNotEmpty() -> candidates.random(random)
-            level == Relaxation.NO_TRIVIAL_LIMIT -> pool.random(random) // a one-card pool; can't happen for N ≥ 10
+            level == Relaxation.NO_TRIVIAL_LIMIT -> pool.random(random) // a one-card pool; can't happen for N ≥ 5
             else -> null
         }
     }

@@ -11,7 +11,7 @@ import kotlin.random.Random
 /** SPEC.md FR-2, over the matrix IMPLEMENTATION.md §5 names. */
 class DeckGeneratorTest {
 
-    private val ranges = listOf(10, 15, 20, 50, 100)
+    private val ranges = listOf(5, 10, 15, 20, 50, 100)
     private val counts = SessionConfig.CARD_COUNTS
     private val opSets: List<Set<Operation>> = (1 until 16).map { mask ->
         Operation.entries.filterIndexed { i, _ -> mask and (1 shl i) != 0 }.toSet()
@@ -105,6 +105,15 @@ class DeckGeneratorTest {
         val deck = DeckGenerator.generate(config, Random(7))
         assertEquals(100, deck.cards.size)
         assertTrue(deck.relaxation >= Relaxation.REPEATS)
+    }
+
+    @Test
+    fun smallestRangeFillsEveryDeck() {
+        // N = 5 is "sums up to 10": only 21 distinct + or × cards, and most × cards are trivial.
+        for (op in Operation.entries) for (count in counts) {
+            val config = SessionConfig(maxNumber = 5, ops = setOf(op), cardCount = count)
+            assertEquals("$op $count", count, DeckGenerator.generate(config, Random(3)).cards.size)
+        }
     }
 
     @Test

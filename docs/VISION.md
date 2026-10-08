@@ -66,7 +66,7 @@ Staying free keeps the product's edge (instant, simple, nothing collected) intac
 A 2nd grader who must practise math daily. This child is the validation (§5).
 
 ### 3.2 Kids 5–12
-The public audience. Younger kids use small ranges ("up to 10", + and −). Older kids use larger ranges with × and ÷. The same app covers both because the range and operations are chosen per session.
+The public audience. Younger kids use small ranges (N = 5 for "sums up to 10", + and −). Older kids use larger ranges with × and ÷. The same app covers both because the range and operations are chosen per session.
 
 ### 3.3 Parents and teachers
 They set it up once, or not at all. They are the ones who find it on Play, so the store listing speaks to them: free, offline, no ads, no data collected.
@@ -83,7 +83,7 @@ Setup ──Start──▶ Cards ──last card──▶ Results ──Play aga
 ```
 
 ### 4.2 Features
-* **Setup** (`SPEC.md` FR-1): name, "numbers up to N" (N = 10…100), operations (+ − × ÷, any mix) and number of cards.
+* **Setup** (`SPEC.md` FR-1): name, "numbers up to N" (N = 5…100), operations (+ − × ÷, any mix) and number of cards.
 * **Smart deck** (FR-2): kid-safe, balanced across operations, no repeats, no near-neighbours, rare trivial cards.
 * **Cards** (FR-3): a big problem, a big keypad, progress "7 / 25", a running timer and an "Are you sure?" nudge on a wrong answer.
 * **Results** (FR-4): "Jenny's score: 21 / 25" and "Time 2:34".
