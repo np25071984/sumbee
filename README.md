@@ -56,9 +56,21 @@ Requires JDK 17+ and the Android SDK (platform 37).
 ./gradlew testDebugUnitTest     # unit tests
 ./gradlew installDebug          # debug build onto a connected device or emulator
 ./gradlew assembleRelease       # shrunk release APK: app/build/outputs/apk/release/
+./gradlew bundleRelease         # signed AAB for Google Play: app/build/outputs/bundle/release/
 ```
 
-The release build is signed with the debug key until the Play upload key exists, so it installs directly for family use (`adb install -r app/build/outputs/apk/release/app-release.apk`).
+## Release signing
+
+Release builds are signed with the Play upload key, which never goes in the repo. Gradle reads it from `~/.gradle/gradle.properties`:
+
+```properties
+SUMBEE_UPLOAD_STORE_FILE=/Users/<you>/.keystores/sumbee-upload.jks
+SUMBEE_UPLOAD_STORE_PASSWORD=...
+SUMBEE_UPLOAD_KEY_ALIAS=upload
+SUMBEE_UPLOAD_KEY_PASSWORD=...
+```
+
+Without those properties, release builds fall back to the debug key: they still install with `adb install`, but Play rejects them. Google holds the app signing key (Play App Signing), so a lost upload key can be reset through Play Console support, but keep a backup of the keystore and its password anyway.
 
 ## Icon
 
