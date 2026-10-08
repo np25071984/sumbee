@@ -133,7 +133,8 @@ FR-2.1–2.3 are never relaxed.
 **Behavior:**
 1. The problem shows in very large type, e.g. `6 + 4 = ?`, with progress `7 / 25` and the running time.
 2. Operators display as + − × ÷, never `*` or `/`.
-3. With a name, the first card shows a one-line greeting above it: "Ready, Jenny?"
+3. With a name, the first card shows a one-line greeting under the answer box until it is first answered: "Ready, Jenny?"
+4. The greeting, the feedback (FR-3.3, FR-3.4) and the Back hint (FR-3.6) share one message slot under the answer box. The problem takes the height that is left and shrinks to fit it, so it stays readable on a 5" phone.
 
 ### FR-3.2 Keypad
 **Inputs:** An on-screen keypad with 0–9, ⌫ and ✓ (Submit). The system keyboard never appears.
@@ -142,7 +143,7 @@ FR-2.1–2.3 are never relaxed.
 2. Input stops at the digit count of the largest possible answer for the selected ops and N. For example, + at N = 20 allows 2 digits; × at N = 100 allows 5.
 3. Leading zeros collapse: "0" then "7" gives "7".
 4. ✓ is disabled while the answer is empty.
-5. Each key is at least 64 dp and gives immediate visual feedback on press.
+5. Each key is at least 64 dp and gives immediate visual feedback on press. Keys are up to 76 dp tall and give up height, down to 64 dp, on a short screen.
 
 ### FR-3.3 Correct answer
 On a correct submission the card is scored correct, gets a brief green confirmation (≤ 300 ms), and the next card appears automatically. After the last card, the app goes to Results (FR-4).
