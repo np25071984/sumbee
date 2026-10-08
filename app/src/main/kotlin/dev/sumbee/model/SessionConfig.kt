@@ -19,7 +19,7 @@ data class SessionConfig(
     )
 
     companion object {
-        const val MIN_MAX = 10
+        const val MIN_MAX = 5
         const val MAX_MAX = 100
         const val MAX_STEP = 5
         const val DEFAULT_MAX = 20

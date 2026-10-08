@@ -137,9 +137,9 @@ All text lives in `strings.xml`, with placeholders such as `results_title_named 
 
 ## 5. Testing
 
-*Status (2026-10-08):* `DeckGeneratorTest` (7 tests, about 2,000 decks) and `SessionViewModelTest` (16 tests) are written and pass: `./gradlew testDebugUnitTest`. The Compose UI test and the benchmarks are not written yet. In their place, the release build was driven end to end on an API 36 emulator: a full 25-card session, the nudge, the reveal, the double Back, Results, and the settings surviving a force-stop. A warm-process-killed cold start measured about 0.5 s there. That is not the FR-7 reference device.
+*Status (2026-10-08):* `DeckGeneratorTest` (8 tests, about 2,500 decks) and `SessionViewModelTest` (16 tests) are written and pass: `./gradlew testDebugUnitTest`. The Compose UI test and the benchmarks are not written yet. In their place, the release build was driven end to end on an API 36 emulator: a full 25-card session, the nudge, the reveal, the double Back, Results, and the settings surviving a force-stop. A warm-process-killed cold start measured about 0.5 s there. That is not the FR-7 reference device.
 
-* **`DeckGeneratorTest`** (JUnit, pure JVM): seeded loops of thousands of decks across N ∈ {10, 15, 20, 50, 100}, every non-empty op subset, and C ∈ {25, 50, 75, 100}. It asserts:
+* **`DeckGeneratorTest`** (JUnit, pure JVM): seeded loops of thousands of decks across N ∈ {5, 10, 15, 20, 50, 100}, every non-empty op subset, and C ∈ {25, 50, 75, 100}. It asserts:
   * size == C;
   * the FR-2.1–2.3 bounds;
   * the FR-2.4 balance and runs ≤ 2;
@@ -155,7 +155,7 @@ All text lives in `strings.xml`, with placeholders such as `results_title_named 
 | Risk | Mitigation |
 | :-- | :-- |
 | Compose cold start too slow on low-end devices | Baseline Profile, R8 full mode, and a near-empty startup path. If FR-7 still fails on the reference device, port the three states to plain Views. The model and ViewModel are UI-agnostic, so only `ui/` changes. |
-| Generator stalls on tiny pools | Relaxation levels with bounded draws (§4.1). The test matrix includes the smallest pools (N = 10, + only, 100 cards). |
+| Generator stalls on tiny pools | Relaxation levels with bounded draws (§4.1). The test matrix includes the smallest pools (N = 5, each op alone, 100 cards). |
 | Lost session on process death | `SavedStateHandle` plus a seed-based deck (§3.5). |
 | Keypad lag under background load | Leaf-level recomposition (§3.2), no animations on keystroke, and frame timing measured in benchmarks. |
 | Tablet layouts look stretched | Max content width and keypad scaling (FR-6.3). |

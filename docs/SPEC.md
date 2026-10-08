@@ -23,7 +23,7 @@ Whoever implements, tests or changes the app.
 
 | Term | Meaning |
 | :-- | :-- |
-| **N** | The range limit chosen on Setup, 10–100. Every operand (or, for ÷, divisor and quotient) is in 0..N. |
+| **N** | The range limit chosen on Setup, 5–100. Every operand (or, for ÷, divisor and quotient) is in 0..N. |
 | **Operation** | One of +, −, ×, ÷. |
 | **Card** | One problem, such as `6 + 4`, with exactly one whole-number answer ≥ 0. |
 | **Deck** | The ordered list of cards generated for one session (FR-2). |
@@ -59,7 +59,7 @@ The app opens on Setup. Everything fits on one screen without scrolling on a 5" 
 
 ### FR-1.2 Number range
 **Description:** How big the numbers go.
-**Inputs:** One slider labelled "Numbers up to **N**", N = 10…100 in steps of 5, default 20.
+**Inputs:** One slider labelled "Numbers up to **N**", N = 5…100 in steps of 5, default 20. N = 5 is for the youngest kids: + at N = 5 is "sums up to 10".
 **Behavior:** The current value of N shows live while sliding. There is no minimum field: the range is always 0..N.
 
 ### FR-1.3 Operations

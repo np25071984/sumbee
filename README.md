@@ -17,7 +17,7 @@ A third rule follows from the audience: **gentle, not punishing.** A wrong answe
 
 ## Features
 
-- **Setup on one screen.** An optional name, "Numbers up to N" (10–100), any mix of + − × ÷, and 25, 50, 75 or 100 cards. All of it is remembered on the device.
+- **Setup on one screen.** An optional name, "Numbers up to N" (5–100), any mix of + − × ÷, and 25, 50, 75 or 100 cards. All of it is remembered on the device.
 - **A smart deck.** Cards feel varied: no card twice in a session (`3 + 5` and `5 + 3` count as the same), no near-repeats like `6 + 4` right after `6 + 5`, operations balanced and mixed, and throwaway cards like `×1` or `+0` kept rare.
 - **Kid-safe math.** No negative answers, no remainders, never ÷0.
 - **A big keypad.** 0–9, ⌫ and ✓, with keys of at least 64 dp. The system keyboard never appears.
