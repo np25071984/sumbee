@@ -9,6 +9,7 @@ Writes:
   app/src/main/res/mipmap-*/ic_launcher(_round).png      legacy icons for API 24–25
   design/icon/sumbee-full.svg                            foreground on its navy ground
   design/icon/play-store-512.png                         the Play listing icon (full bleed; Play rounds it)
+  design/icon/play-feature-1024x500.png                  the Play feature graphic (text in the app's fonts)
 
 Needs rsvg-convert (brew install librsvg). The vector XML below mirrors the SVG by hand, shape for
 shape: change both together.
@@ -105,11 +106,36 @@ def full_svg(size, scale=1.0, mask=None):
             f'<g transform="{t}">{inner}</g></g></svg>')
 
 
-def render(svg, size, out):
+def feature_svg():
+    """The 1024×500 Play feature graphic: the bee, the wordmark, the tagline and the four operation
+    chips. Key content stays clear of the edges, which Play may crop or cover."""
+    fg = open(os.path.join(HERE, "sumbee-foreground.svg")).read()
+    bee = re.search(r"<svg[^>]*>(.*)</svg>", fg, re.S).group(1)
+    chips = "".join(
+        f'<g transform="translate({456 + i * 92} 340)"><rect width="76" height="76" rx="22" fill="{SUN}"/>'
+        f'<text x="38" y="58" text-anchor="middle" font-family="Baloo 2" font-weight="800" font-size="60" '
+        f'fill="{NAVY}">{op}</text></g>'
+        for i, op in enumerate("+−×÷"))
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 500" width="1024" height="500">'
+            f'<rect width="1024" height="500" fill="{NAVY}"/>'
+            f'<g transform="translate(240 250) scale(5.6) translate(-54 -54)">{bee}</g>'
+            f'<text x="448" y="214" font-family="Baloo 2" font-weight="800" font-size="128" fill="{SUN}">Sumbee</text>'
+            f'<text x="456" y="284" font-family="Nunito" font-weight="700" font-size="38" fill="{WHITE}">'
+            f"Daily math practice for kids</text>{chips}</svg>")
+
+
+def render(svg, size, out, height=None):
     with tempfile.NamedTemporaryFile("w", suffix=".svg", delete=False) as f:
         f.write(svg)
-    subprocess.run(["rsvg-convert", "-w", str(size), "-h", str(size), f.name, "-o", out], check=True)
+    # Text uses the app's bundled fonts, so point fontconfig at res/font instead of system fonts.
+    with tempfile.NamedTemporaryFile("w", suffix=".conf", delete=False) as conf:
+        conf.write(f'<?xml version="1.0"?><fontconfig><dir>{os.path.join(RES, "font")}</dir>'
+                   f"<cachedir>{tempfile.gettempdir()}/sumbee-fontconfig</cachedir></fontconfig>")
+    env = dict(os.environ, FONTCONFIG_FILE=conf.name, PANGOCAIRO_BACKEND="fc")
+    subprocess.run(["rsvg-convert", "-w", str(size), "-h", str(height or size), f.name, "-o", out],
+                   check=True, env=env)
     os.unlink(f.name)
+    os.unlink(conf.name)
 
 
 def main():
@@ -127,6 +153,7 @@ def main():
 
     open(os.path.join(HERE, "sumbee-full.svg"), "w").write(full_svg(108))
     render(full_svg(512, 1.3), 512, os.path.join(HERE, "play-store-512.png"))
+    render(feature_svg(), 1024, os.path.join(HERE, "play-feature-1024x500.png"), height=500)
 
 
 if __name__ == "__main__":

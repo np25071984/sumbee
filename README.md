@@ -74,7 +74,7 @@ Without those properties, release builds fall back to the debug key: they still 
 
 ## Icon
 
-The master is `design/icon/sumbee-foreground.svg`. Rebuild every launcher size, the themed icon and the Play Store icon with `python3 design/icon/build_icons.py` (needs `rsvg-convert`).
+The master is `design/icon/sumbee-foreground.svg`. Rebuild every launcher size, the themed icon, the Play Store icon and the Play feature graphic with `python3 design/icon/build_icons.py` (needs `rsvg-convert`).
 
 ## Licences
 
