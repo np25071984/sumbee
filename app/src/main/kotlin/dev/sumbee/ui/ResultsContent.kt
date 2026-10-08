@@ -58,17 +58,21 @@ fun ResultsContent(state: UiState.Results, onPlayAgain: () -> Unit) {
                     .fillMaxWidth()
                     .background(Palette.White, RoundedCornerShape(24.dp))
                     .padding(horizontal = 24.dp, vertical = 18.dp),
-                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Row(
+                    Modifier.alignByBaseline(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
                     Icon(Icons.Clock, contentDescription = null, tint = Palette.Muted, modifier = Modifier.size(24.dp))
                     Text(
                         stringResource(R.string.time),
                         style = TextStyle(fontFamily = Fonts.Nunito, fontWeight = FontWeight.ExtraBold, fontSize = 20.sp, color = Palette.Muted),
                     )
                 }
-                Text(formatTime((state.elapsedMs / 1000).toInt()), style = big.copy(fontSize = 44.sp))
+                val timeStyle = big.copy(fontSize = 44.sp)
+                Text(formatTime((state.elapsedMs / 1000).toInt()), style = timeStyle, modifier = Modifier.digitsOnly(timeStyle.fontSize).alignByBaseline())
             }
         }
         ChunkyButton(
