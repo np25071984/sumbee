@@ -1,0 +1,30 @@
+[versions]
+agp = "9.4.0"
+# AGP 9 compiles Kotlin itself (built-in Kotlin); the Compose compiler plugin must match the
+# Kotlin version it runs, which AGP 9.4.0 resolves to 2.2.10.
+kotlin = "2.2.10"
+composeBom = "2026.09.00"
+activityCompose = "1.13.0"
+lifecycle = "2.11.0"
+datastore = "1.2.1"
+splashscreen = "1.2.0"
+coroutines = "1.10.2"
+junit = "4.13.2"
+
+[libraries]
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-foundation = { module = "androidx.compose.foundation:foundation" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+junit = { module = "junit:junit", version.ref = "junit" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

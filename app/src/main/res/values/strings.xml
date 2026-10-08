@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Sumbee</string>
+
+    <!-- Setup (FR-1) -->
+    <string name="name_label">What\'s your name?</string>
+    <string name="name_placeholder">Your name</string>
+    <string name="range_label">Numbers up to</string>
+    <string name="ops_label">Practise</string>
+    <string name="cards_label">How many cards?</string>
+    <string name="start">Start</string>
+    <string name="op_plus">Addition</string>
+    <string name="op_minus">Subtraction</string>
+    <string name="op_times">Multiplication</string>
+    <string name="op_divide">Division</string>
+
+    <!-- Cards (FR-3) -->
+    <string name="greeting">Ready, %1$s?</string>
+    <string name="progress">%1$d / %2$d</string>
+    <string name="nudge">Are you sure? Check again.</string>
+    <string name="correct">Correct!</string>
+    <string name="reveal">The answer is %1$d</string>
+    <string name="back_hint">Press Back again to stop</string>
+    <string name="key_delete">Delete</string>
+    <string name="key_submit">Check answer</string>
+    <string name="answer_description">Your answer</string>
+
+    <!-- Results (FR-4, FR-5) -->
+    <string name="results_title_named">%1$s\'s score:</string>
+    <string name="results_title">Your score:</string>
+    <string name="time">Time</string>
+    <string name="play_again">Play again</string>
+</resources>

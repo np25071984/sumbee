@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- System splash only, with no extra delay (IMPLEMENTATION.md §4.5). -->
+    <style name="Theme.Sumbee.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ground</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <!-- The bee's white wings need the navy disc behind them on the light splash. -->
+        <item name="windowSplashScreenIconBackgroundColor">@color/ic_launcher_background</item>
+        <item name="postSplashScreenTheme">@style/Theme.Sumbee</item>
+    </style>
+
+    <style name="Theme.Sumbee" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/ground</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>
