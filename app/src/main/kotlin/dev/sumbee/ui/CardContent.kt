@@ -21,12 +21,14 @@ import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.contentDescription
@@ -57,6 +59,13 @@ fun CardContent(
     onDelete: () -> Unit,
     onSubmit: () -> Unit,
 ) {
+    // The screen stays on while cards show (FR-3.7): a window flag, so no permission, and Setup and
+    // Results still sleep as usual.
+    val view = LocalView.current
+    DisposableEffect(view) {
+        view.keepScreenOn = true
+        onDispose { view.keepScreenOn = false }
+    }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         // Keys give up height, down to FR-3.2's 64 dp, before the problem has to shrink.
         val keyHeight = ((maxHeight - CardChrome) / 4).coerceIn(MinKeyHeight, MaxKeyHeight)
