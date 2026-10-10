@@ -89,7 +89,10 @@ The delays run as `viewModelScope` coroutines. Input is ignored while `feedback`
 ### 3.4 Timing (FR-3.5)
 `SystemClock.elapsedRealtime()`, which is monotonic and unaffected by clock changes. The ViewModel stores `accumulatedMs` plus `runningSince`. It pauses on `ON_STOP` and resumes on `ON_START`, through a `LifecycleEventObserver` in `MainActivity`. The on-screen clock ticks once a second from a coroutine, and only the timer `Text` reads it.
 
-### 3.5 Surviving process death (FR-3.6)
+### 3.5 Screen stays on (FR-3.7)
+`CardContent` sets `LocalView.current.keepScreenOn` in a `DisposableEffect` and clears it on dispose, so the flag lives exactly as long as the Cards state. It is the window's `FLAG_KEEP_SCREEN_ON`, not a `WakeLock`, so the manifest needs no `WAKE_LOCK` permission.
+
+### 3.6 Surviving process death (FR-3.6)
 `SavedStateHandle` holds the config, the RNG seed, index, correct count, attempt and accumulated time. The deck is regenerated from the seed, so it is never serialized. If restoring fails, the app falls back to Setup.
 
 ## 4. Core Workflows
@@ -156,7 +159,7 @@ All text lives in `strings.xml`, with placeholders such as `results_title_named 
 | :-- | :-- |
 | Compose cold start too slow on low-end devices | Baseline Profile, R8 full mode, and a near-empty startup path. If FR-7 still fails on the reference device, port the three states to plain Views. The model and ViewModel are UI-agnostic, so only `ui/` changes. |
 | Generator stalls on tiny pools | Relaxation levels with bounded draws (§4.1). The test matrix includes the smallest pools (N = 5, each op alone, 100 cards). |
-| Lost session on process death | `SavedStateHandle` plus a seed-based deck (§3.5). |
+| Lost session on process death | `SavedStateHandle` plus a seed-based deck (§3.6). |
 | Keypad lag under background load | Leaf-level recomposition (§3.2), no animations on keystroke, and frame timing measured in benchmarks. |
 | Tablet layouts look stretched | Max content width and keypad scaling (FR-6.3). |
 

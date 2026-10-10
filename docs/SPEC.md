@@ -167,6 +167,9 @@ On a correct submission the card is scored correct, gets a brief green confirmat
 2. Rotation or a configuration change keeps the session as it was.
 3. If the system kills the process in the background, the session is restored where possible. Otherwise the app reopens on Setup.
 
+### FR-3.7 Screen stays on
+**Behavior:** While cards are showing, the screen does not time out, so a child thinking over a card is never sent to the lock screen mid-session. It uses the window's keep-screen-on flag, which needs no permission (FR-8) and lasts only while the app is visible. Setup and Results sleep as usual, so a device left on them doesn't drain its battery. The power button still turns the screen off, and the timer pauses (FR-3.5).
+
 ## 6. FR-4: Results
 
 ### FR-4.1 Results screen
