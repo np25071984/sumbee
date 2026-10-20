@@ -6,3 +6,9 @@ local.properties
 .DS_Store
 .kotlin/
 captures/
+
+# iOS
+.build/
+.swiftpm/
+xcuserdata/
+DerivedData/
