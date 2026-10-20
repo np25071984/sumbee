@@ -132,4 +132,4 @@ Free on Google Play, enrolled in the Designed for Families program. Before submi
 
 * **Weak-fact practice** ("give me more of the ones I missed") would need history, which §1.1 rules out. Revisit only if M2 shows a real need, and keep it on-device if so.
 * **Localization.** Strings are resources from day one (`IMPLEMENTATION.md` §4.6). Translations come after launch.
-* **iOS.** Not planned.
+* **iOS.** A SwiftUI port lives in `ios/` (`IMPLEMENTATION.md` §8). It has the same features, with ✕ in place of the system Back button. Publishing it is not decided. It would come after the Play decision (M3), and needs an Apple Developer account and App Store Kids Category review.

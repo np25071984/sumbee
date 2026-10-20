@@ -25,7 +25,7 @@
 ## 2. Project Layout
 
 ```
-app/src/main/kotlin/dev/sumbee/
+android/app/src/main/kotlin/dev/sumbee/
   MainActivity.kt          // splash, edge-to-edge, lifecycle → clock, setContent { App(vm) }
   model/
     Operation.kt           // enum PLUS, MINUS, TIMES, DIVIDE + symbol, maxAnswer
@@ -44,9 +44,9 @@ app/src/main/kotlin/dev/sumbee/
     Icons.kt               // the stroke icons
   data/
     SettingsRepository.kt  // SettingsStore interface + DataStore<Preferences> (FR-1.6)
-app/src/test/kotlin/...    // DeckGeneratorTest, SessionViewModelTest
-app/src/androidTest/...    // not yet: Compose happy-path test (§5)
-baselineprofile/           // not yet: Baseline Profile + startup/frame benchmarks (§5)
+android/app/src/test/kotlin/...         // DeckGeneratorTest, SessionViewModelTest
+android/app/src/androidTest/...         // not yet: Compose happy-path test (§5)
+android/baselineprofile/                // not yet: Baseline Profile + startup/frame benchmarks (§5)
 ```
 
 ## 3. State
@@ -172,3 +172,36 @@ All text lives in `strings.xml`, with placeholders such as `results_title_named 
   * Data Safety: no data collected or shared;
   * no ads declared;
   * a privacy policy URL, which can be a static page stating that nothing is collected.
+
+## 8. iOS
+
+A native SwiftUI port in `ios/`, kept behaviour for behaviour with the Android app. Nothing is shared between the two at build time. Change one, then change the other.
+
+```
+ios/
+  SumbeeCore/              // Swift package, no UIKit or SwiftUI: `swift test` runs it on the Mac
+    MathOperation.swift    // Operation.kt (renamed: Foundation already has an Operation)
+    Card.swift, SessionConfig.swift, DeckGenerator.swift   // line-for-line ports of model/
+    SeededRandom.swift     // SplitMix64: Swift's own generator can't be seeded
+    SessionModel.swift     // SessionViewModel.kt as an @Observable, plus SessionSnapshot
+    Scheduler.swift        // the clock and delays, injected so tests move time by hand
+    SettingsStore.swift    // UserDefaults in place of DataStore
+  Sumbee/                  // the app: SwiftUI views, fonts, asset catalog, privacy manifest
+  SumbeeUITests/           // XCUITest: a full session through the keypad, with screenshots
+  Sumbee.xcodeproj         // folder-synchronized groups: new files need no project edits
+```
+
+* **Stack:** SwiftUI, iOS 17+, iPhone only, portrait, no dependencies. Bundle id `dev.sumbee`, the same version numbers as Android.
+* **Decks** follow the same rules and pass the same tests, but they don't match Android's for a given seed. They don't need to, since nothing crosses platforms.
+* **Back (FR-3.6):** iOS has no system Back. On Cards, an ✕ in the header calls `back()`: one tap shows "Tap ✕ again to stop" for 2 s, and a second tap leaves. On Results, a **Change settings** link goes to Setup.
+* **Lifecycle and timing (§3.4):** `scenePhase` `.active` and `.background` call `onVisible()` and `onHidden()`.
+* **Restoration (§3.6):** `SessionSnapshot` holds the same fields `SavedStateHandle` does, with the same rule that a decided card is saved as the next one. It is stored with `@SceneStorage` on every change and on backgrounding. That is iOS's own state restoration, so a session comes back after iOS ends the app in the background, but not after the user swipes it away.
+* **Screen on (§3.5):** `isIdleTimerDisabled` while `CardView` is on screen.
+* **Layout:** the same sizes in pt as Android's dp, including the 396 pt card chrome that decides key height (§3.2a) and `digitsOnly` for Baloo's tall line box.
+* **Fonts** are copied from `android/app/src/main/res/font` and listed in `UIAppFonts`.
+* **Icons:** the stroke icons are SwiftUI `Path`s on the same 24-unit grid. `build_icons.py` writes the 1024 px app icon and the header bee into the asset catalog.
+* **Privacy:** `PrivacyInfo.xcprivacy` declares UserDefaults (reason CA92.1) and no tracking or collected data. The app makes no network calls, but iOS has no network permission to leave out, so this rests on the code alone.
+* **Tests:**
+  * `SumbeeCoreTests` (Swift Testing, 31 tests) ports `DeckGeneratorTest` and `SessionViewModelTest`. It adds checks for a stopped clock, restoring a decided card, bad snapshots and the UserDefaults store. Run it with `swift test`.
+  * `SumbeeUITests` plays a full 25-card session (right answer, nudge, reveal, Results, Play again, the ✕ exit), then checks that one ✕ tap doesn't leave.
+  * *Not covered by a test:* restoration after iOS ends the app, which XCUITest can't trigger. Check it from Xcode by sending the app home and stopping it, then running again.

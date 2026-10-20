@@ -2,6 +2,8 @@
 
 Sumbee is a free, offline Android app for daily arithmetic practice, for kids aged 5–12. You pick how big the numbers go, which operations to practise and how many cards, then tap Start. The child answers each card on a big on-screen keypad, and at the end sees their score and time. That is the whole app.
 
+An iPhone version with the same features lives in `ios/`. It isn't on the App Store.
+
 The name is "sum" plus "spelling bee": a math bee. The icon is a bee with a plus on its back.
 
 ## The idea
@@ -23,8 +25,8 @@ A third rule follows from the audience: **gentle, not punishing.** A wrong answe
 - **A big keypad.** 0–9, ⌫ and ✓, with keys of at least 64 dp. The system keyboard never appears.
 - **A second chance.** After a wrong first answer the child can check and fix it. A correct second answer still counts. After a second miss, the right answer shows calmly before the next card.
 - **Progress and time.** A "7 / 25" counter and a running timer, which pauses when the app goes to the background.
-- **Results.** "Jenny's score: 21 / 25" and "Time 2:34". **Play again** starts a fresh deck with the same settings in one tap. Back goes to Setup to change them.
-- **No accidental exits.** During a session, Back once shows "Press Back again to stop", and only a second Back leaves.
+- **Results.** "Jenny's score: 21 / 25" and "Time 2:34". **Play again** starts a fresh deck with the same settings in one tap. Back goes to Setup to change them (on iPhone, **Change settings**).
+- **No accidental exits.** During a session, Back once shows "Press Back again to stop", and only a second Back leaves. iPhones have no Back button, so there the card screen has an ✕ that works the same way: tap it twice.
 
 ## What it is not
 
@@ -50,14 +52,31 @@ Kotlin and Jetpack Compose, a single Activity, minSdk 24 (Android 7.0), targetSd
 
 ## Build and run
 
-Requires JDK 17+ and the Android SDK (platform 37).
+### Android
+
+Requires JDK 17+ and the Android SDK (platform 37). The Gradle project lives in `android/`.
 
 ```sh
+cd android
 ./gradlew testDebugUnitTest     # unit tests
 ./gradlew installDebug          # debug build onto a connected device or emulator
-./gradlew assembleRelease       # shrunk release APK: app/build/outputs/apk/release/
-./gradlew bundleRelease         # signed AAB for Google Play: app/build/outputs/bundle/release/
+./gradlew assembleRelease       # shrunk release APK: android/app/build/outputs/apk/release/
+./gradlew bundleRelease         # signed AAB for Google Play: android/app/build/outputs/bundle/release/
 ```
+
+### iOS
+
+Requires Xcode 16+ with an iOS simulator runtime. The app is SwiftUI, iOS 17+, iPhone only. Its logic is the Swift package `ios/SumbeeCore`, a port of `model/` and `SessionViewModel`, so it can be tested on the Mac without a simulator.
+
+```sh
+cd ios
+swift test --package-path SumbeeCore    # deck and session tests, no simulator
+open Sumbee.xcodeproj                   # run from Xcode, or:
+xcodebuild test -project Sumbee.xcodeproj -scheme Sumbee \
+  -destination 'platform=iOS Simulator,name=iPhone 17'   # UI test: plays a full session
+```
+
+Set `TEST_RUNNER_SCREENSHOT_DIR=<folder>` on the `xcodebuild test` line to save a screenshot of each screen. To run on your own iPhone, pick it as the destination in Xcode and sign with your Apple ID. Publishing would need an Apple Developer account.
 
 ## Release signing
 
@@ -74,7 +93,7 @@ Without those properties, release builds fall back to the debug key: they still 
 
 ## Icon
 
-The master is `design/icon/sumbee-foreground.svg`. Rebuild every launcher size, the themed icon, the Play Store icon and the Play feature graphic with `python3 design/icon/build_icons.py` (needs `rsvg-convert`).
+The master is `design/icon/sumbee-foreground.svg`. Rebuild every launcher size, the themed icon, the Play Store icon, the Play feature graphic, the iOS app icon and the bee in Setup's header with `python3 design/icon/build_icons.py` (needs `rsvg-convert`).
 
 ## Licences
 
