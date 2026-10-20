@@ -10,6 +10,8 @@ Writes:
   design/icon/sumbee-full.svg                                    foreground on its navy ground
   design/icon/play-store-512.png                                 the Play listing icon (full bleed; Play rounds it)
   design/icon/play-feature-1024x500.png                          the Play feature graphic (text in the app's fonts)
+  ios/Sumbee/Resources/Assets.xcassets/AppIcon.appiconset/       the iOS icon (opaque, full bleed; iOS rounds it)
+  ios/Sumbee/Resources/Assets.xcassets/Bee.imageset/             the bee on its navy tile, for Setup's header
 
 Needs rsvg-convert (brew install librsvg). The vector XML below mirrors the SVG by hand, shape for
 shape: change both together.
@@ -22,6 +24,7 @@ import tempfile
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 HERE = os.path.dirname(os.path.abspath(__file__))
 RES = os.path.join(ROOT, "android", "app", "src", "main", "res")
+ASSETS = os.path.join(ROOT, "ios", "Sumbee", "Resources", "Assets.xcassets")
 NAVY, SUN, WHITE = "#1B2A4A", "#FFC93C", "#FFFFFF"
 
 
@@ -154,6 +157,15 @@ def main():
     open(os.path.join(HERE, "sumbee-full.svg"), "w").write(full_svg(108))
     render(full_svg(512, 1.3), 512, os.path.join(HERE, "play-store-512.png"))
     render(feature_svg(), 1024, os.path.join(HERE, "play-feature-1024x500.png"), height=500)
+    ios()
+
+
+def ios():
+    # One 1024 icon: iOS makes every other size from it and applies its own mask.
+    render(full_svg(1024, 1.3), 1024, os.path.join(ASSETS, "AppIcon.appiconset", "icon-1024.png"))
+    # Setup's header shows the bee on its tile at 48 pt, zoomed past the adaptive-icon margins as on
+    # Android: 144 px is 48 pt at @3x.
+    render(full_svg(144, 1.55), 144, os.path.join(ASSETS, "Bee.imageset", "bee.png"))
 
 
 if __name__ == "__main__":
