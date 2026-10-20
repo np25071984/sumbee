@@ -50,13 +50,14 @@ Kotlin and Jetpack Compose, a single Activity, minSdk 24 (Android 7.0), targetSd
 
 ## Build and run
 
-Requires JDK 17+ and the Android SDK (platform 37).
+Requires JDK 17+ and the Android SDK (platform 37). The Gradle project lives in `android/`.
 
 ```sh
+cd android
 ./gradlew testDebugUnitTest     # unit tests
 ./gradlew installDebug          # debug build onto a connected device or emulator
-./gradlew assembleRelease       # shrunk release APK: app/build/outputs/apk/release/
-./gradlew bundleRelease         # signed AAB for Google Play: app/build/outputs/bundle/release/
+./gradlew assembleRelease       # shrunk release APK: android/app/build/outputs/apk/release/
+./gradlew bundleRelease         # signed AAB for Google Play: android/app/build/outputs/bundle/release/
 ```
 
 ## Release signing

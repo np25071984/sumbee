@@ -4,12 +4,12 @@
     python3 design/icon/build_icons.py
 
 Writes:
-  app/src/main/res/drawable/ic_launcher_foreground.xml   adaptive foreground + splash icon (vector)
-  app/src/main/res/drawable/ic_launcher_monochrome.xml   themed-icon silhouette (Android 13+)
-  app/src/main/res/mipmap-*/ic_launcher(_round).png      legacy icons for API 24–25
-  design/icon/sumbee-full.svg                            foreground on its navy ground
-  design/icon/play-store-512.png                         the Play listing icon (full bleed; Play rounds it)
-  design/icon/play-feature-1024x500.png                  the Play feature graphic (text in the app's fonts)
+  android/app/src/main/res/drawable/ic_launcher_foreground.xml   adaptive foreground + splash icon (vector)
+  android/app/src/main/res/drawable/ic_launcher_monochrome.xml   themed-icon silhouette (Android 13+)
+  android/app/src/main/res/mipmap-*/ic_launcher(_round).png      legacy icons for API 24–25
+  design/icon/sumbee-full.svg                                    foreground on its navy ground
+  design/icon/play-store-512.png                                 the Play listing icon (full bleed; Play rounds it)
+  design/icon/play-feature-1024x500.png                          the Play feature graphic (text in the app's fonts)
 
 Needs rsvg-convert (brew install librsvg). The vector XML below mirrors the SVG by hand, shape for
 shape: change both together.
@@ -21,7 +21,7 @@ import tempfile
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 HERE = os.path.dirname(os.path.abspath(__file__))
-RES = os.path.join(ROOT, "app", "src", "main", "res")
+RES = os.path.join(ROOT, "android", "app", "src", "main", "res")
 NAVY, SUN, WHITE = "#1B2A4A", "#FFC93C", "#FFFFFF"
 
 

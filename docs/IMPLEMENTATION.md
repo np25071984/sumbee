@@ -25,7 +25,7 @@
 ## 2. Project Layout
 
 ```
-app/src/main/kotlin/dev/sumbee/
+android/app/src/main/kotlin/dev/sumbee/
   MainActivity.kt          // splash, edge-to-edge, lifecycle → clock, setContent { App(vm) }
   model/
     Operation.kt           // enum PLUS, MINUS, TIMES, DIVIDE + symbol, maxAnswer
@@ -44,9 +44,9 @@ app/src/main/kotlin/dev/sumbee/
     Icons.kt               // the stroke icons
   data/
     SettingsRepository.kt  // SettingsStore interface + DataStore<Preferences> (FR-1.6)
-app/src/test/kotlin/...    // DeckGeneratorTest, SessionViewModelTest
-app/src/androidTest/...    // not yet: Compose happy-path test (§5)
-baselineprofile/           // not yet: Baseline Profile + startup/frame benchmarks (§5)
+android/app/src/test/kotlin/...         // DeckGeneratorTest, SessionViewModelTest
+android/app/src/androidTest/...         // not yet: Compose happy-path test (§5)
+android/baselineprofile/                // not yet: Baseline Profile + startup/frame benchmarks (§5)
 ```
 
 ## 3. State
