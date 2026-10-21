@@ -60,7 +60,7 @@ The app opens on Setup. Everything fits on one screen without scrolling on a 5" 
 ### FR-1.2 Number range
 **Description:** How big the numbers go.
 **Inputs:** One slider labelled "Numbers up to **N**", N = 5…100 in steps of 5, default 20. N = 5 is for the youngest kids: + at N = 5 is "sums up to 10".
-**Behavior:** The current value of N shows live while sliding. There is no minimum field: the range is always 0..N.
+**Behavior:** The current value of N shows live while sliding. There is no minimum field: the range is always 0..N. For × and ÷, N stops at 12, the times tables (FR-2.1). Setup doesn't say so.
 
 ### FR-1.3 Operations
 **Description:** Which operations the deck uses.
@@ -86,9 +86,11 @@ The app opens on Setup. Everything fits on one screen without scrolling on a 5" 
 Generation is deterministic for a given random seed, which is how it is tested. It always returns exactly the requested number of cards and never fails or hangs.
 
 ### FR-2.1 Operand bounds
-* **+ and ×:** a, b ∈ 0..N.
+Let T = min(N, 12), the times-table limit. + and − grow with N, but × grows with N², so one N can't suit both: at N = 20, × would deal 12 × 16, a 4th–5th grade written problem, to a child who chose N = 20 for sums.
+* **+:** a, b ∈ 0..N.
+* **×:** a, b ∈ 0..T: the times tables, up to 12 × 12.
 * **−:** a, b ∈ 0..N with a ≥ b.
-* **÷:** the card is `a ÷ b = q`, with divisor b ∈ 1..N, quotient q ∈ 0..N and a = b·q. Division mirrors multiplication, so at N = 10 it covers exactly the inverse of the ×10 table.
+* **÷:** the card is `a ÷ b = q`, with divisor b ∈ 1..T, quotient q ∈ 0..T and a = b·q. Division mirrors multiplication, so it covers exactly the inverse of the × cards.
 
 ### FR-2.2 No negatives
 Every answer is ≥ 0.
@@ -140,7 +142,7 @@ FR-2.1–2.3 are never relaxed.
 **Inputs:** An on-screen keypad with 0–9, ⌫ and ✓ (Submit). The system keyboard never appears.
 **Behavior:**
 1. Digits append to the answer, and ⌫ removes the last digit.
-2. Input stops at the digit count of the largest possible answer for the selected ops and N. For example, + at N = 20 allows 2 digits; × at N = 100 allows 5.
+2. Input stops at the digit count of the largest possible answer for the selected ops and N. For example, + at N = 20 allows 2 digits; × allows 3 at any N ≥ 10 (12 × 12 = 144).
 3. Leading zeros collapse: "0" then "7" gives "7".
 4. ✓ is disabled while the answer is empty.
 5. Each key is at least 64 dp and gives immediate visual feedback on press. Keys are up to 76 dp tall and give up height, down to 64 dp, on a short screen.

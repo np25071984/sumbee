@@ -59,13 +59,14 @@ public enum DeckGenerator {
         return Deck(cards: deck, relaxation: level)
     }
 
-    /// Every valid card for `op` with operands up to `n`, one per canonical form (FR-2.1–2.3).
+    /// Every valid card for `op` at "numbers up to `n`", one per canonical form (FR-2.1–2.3).
     public static func pool(_ op: MathOperation, _ n: Int) -> [Card] {
+        let m = op.limit(n)
         var cards: [Card] = []
         switch op {
-        case .plus, .times: for a in 0...n { for b in a...n { cards.append(Card(op, a, b)) } }
-        case .minus: for a in 0...n { for b in 0...a { cards.append(Card(op, a, b)) } }
-        case .divide: for b in 1...n { for q in 0...n { cards.append(Card(op, b * q, b)) } }
+        case .plus, .times: for a in 0...m { for b in a...m { cards.append(Card(op, a, b)) } }
+        case .minus: for a in 0...m { for b in 0...a { cards.append(Card(op, a, b)) } }
+        case .divide: for b in 1...m { for q in 0...m { cards.append(Card(op, b * q, b)) } }
         }
         return cards
     }

@@ -36,18 +36,21 @@ struct DeckGeneratorTests {
         let n = config.maxNumber
         #expect(cards.count == config.cardCount, "size \(what)")
 
-        // FR-2.1–2.3: never relaxed.
+        // FR-2.1–2.3: never relaxed. × and ÷ stay within the times tables.
+        let t = min(n, MathOperation.tableMax)
         for c in cards {
             #expect(config.ops.contains(c.op), "op \(c) \(what)")
             switch c.op {
-            case .plus, .times:
+            case .plus:
                 #expect((0...n).contains(c.a) && (0...n).contains(c.b), "bounds \(c) \(what)")
+            case .times:
+                #expect((0...t).contains(c.a) && (0...t).contains(c.b), "bounds \(c) \(what)")
             case .minus:
                 #expect((0...n).contains(c.a) && (0...c.a).contains(c.b), "bounds \(c) \(what)")
             case .divide:
-                #expect((1...n).contains(c.b), "divisor \(c) \(what)")
+                #expect((1...t).contains(c.b), "divisor \(c) \(what)")
                 #expect(c.a % c.b == 0, "whole \(c) \(what)")
-                #expect((0...n).contains(c.answer), "quotient \(c) \(what)")
+                #expect((0...t).contains(c.answer), "quotient \(c) \(what)")
             }
             #expect(c.answer >= 0, "negative \(c) \(what)")
         }
@@ -120,6 +123,18 @@ struct DeckGeneratorTests {
         }
     }
 
+    @Test func timesTablesStopAt12() {
+        // N above 12 widens + and − only; × and ÷ keep the 12 times table (FR-2.1).
+        #expect(DeckGenerator.pool(.times, 20).count == 91)
+        #expect(DeckGenerator.pool(.times, 12) == DeckGenerator.pool(.times, 100))
+        #expect(DeckGenerator.pool(.divide, 100).count == 156)
+        #expect(DeckGenerator.pool(.times, 5).count == 21) // below 12, N still rules
+        #expect(DeckGenerator.pool(.plus, 100).count == 5151)
+        #expect(SessionConfig(maxNumber: 100, ops: [.times]).maxDigits == 3) // 144
+        #expect(SessionConfig(maxNumber: 100, ops: [.divide]).maxDigits == 2) // 12
+        #expect(SessionConfig(maxNumber: 100, ops: [.plus, .divide]).maxDigits == 3) // 200
+    }
+
     @Test func sameSeedSameDeck() {
         let config = SessionConfig(maxNumber: 30, ops: Set(MathOperation.allCases), cardCount: 75)
         #expect(deal(config, seed: 99) == deal(config, seed: 99))
@@ -171,6 +186,6 @@ struct DeckGeneratorTests {
         #expect(SessionConfig.filterName(String(repeating: "a", count: 30)).count == 20)
         #expect(SessionConfig(maxNumber: 20, ops: [.plus]).maxDigits == 2)
         #expect(SessionConfig(maxNumber: 20, ops: [.plus, .times]).maxDigits == 3)
-        #expect(SessionConfig(maxNumber: 100, ops: [.times]).maxDigits == 5)
+        #expect(SessionConfig(maxNumber: 10, ops: [.times]).maxDigits == 3)
     }
 }
