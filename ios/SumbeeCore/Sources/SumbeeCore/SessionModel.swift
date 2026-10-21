@@ -39,7 +39,8 @@ public struct ResultsState: Equatable, Sendable {
 
 /// What a session needs to come back after iOS ends the app in the background (IMPLEMENTATION.md §3.5):
 /// the deck itself never, only its seed. A card already decided is saved as the card after it, so a
-/// restore never replays a decision.
+/// restore never replays a decision. The name is left out: iOS keeps scene state where backups may
+/// reach it, so the name comes back from the settings file instead, which Start always wrote.
 public struct SessionSnapshot: Codable, Equatable, Sendable {
     public enum Mode: String, Codable, Sendable { case cards, results }
 
@@ -294,6 +295,8 @@ public final class SessionModel {
 
     /// What to save now; nil on Setup, which comes back from the settings alone.
     public var snapshot: SessionSnapshot? {
+        var config = config
+        config.name = ""
         switch state {
         case .setup:
             return nil
@@ -315,7 +318,8 @@ public final class SessionModel {
 
     /// Rebuilds a saved session; stays on Setup when the snapshot doesn't add up.
     private func restore(_ snapshot: SessionSnapshot) {
-        let c = snapshot.config.sanitized()
+        var c = snapshot.config.sanitized()
+        c.name = config.name // from the settings, loaded in init
         switch snapshot.mode {
         case .results:
             guard snapshot.total > 0, (0...snapshot.total).contains(snapshot.correct) else { return }
