@@ -20,12 +20,13 @@ struct RootView: View {
         .onAppear {
             guard model == nil else { return }
             // UI tests start from a fresh install's state every run.
-            if CommandLine.arguments.contains("-uiTesting"), let id = Bundle.main.bundleIdentifier {
-                UserDefaults.standard.removePersistentDomain(forName: id)
+            let settings = FileSettingsStore()
+            if CommandLine.arguments.contains("-uiTesting") {
+                settings.reset()
                 saved = nil
             }
             let snapshot = saved.flatMap { try? JSONDecoder().decode(SessionSnapshot.self, from: $0) }
-            model = SessionModel(settings: UserDefaultsSettingsStore(), scheduler: TaskScheduler(), restoring: snapshot)
+            model = SessionModel(settings: settings, scheduler: TaskScheduler(), restoring: snapshot)
         }
         .onChange(of: phase) { _, phase in
             switch phase {

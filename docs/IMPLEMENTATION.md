@@ -185,7 +185,7 @@ ios/
     SeededRandom.swift     // SplitMix64: Swift's own generator can't be seeded
     SessionModel.swift     // SessionViewModel.kt as an @Observable, plus SessionSnapshot
     Scheduler.swift        // the clock and delays, injected so tests move time by hand
-    SettingsStore.swift    // UserDefaults in place of DataStore
+    SettingsStore.swift    // a JSON file kept out of backups, in place of DataStore
   Sumbee/                  // the app: SwiftUI views, fonts, asset catalog, privacy manifest
   SumbeeUITests/           // XCUITest: a full session through the keypad, with screenshots
   Sumbee.xcodeproj         // folder-synchronized groups: new files need no project edits
@@ -200,8 +200,10 @@ ios/
 * **Layout:** the same sizes in pt as Android's dp, including the 396 pt card chrome that decides key height (§3.2a) and `digitsOnly` for Baloo's tall line box.
 * **Fonts** are copied from `android/app/src/main/res/font` and listed in `UIAppFonts`.
 * **Icons:** the stroke icons are SwiftUI `Path`s on the same 24-unit grid. `build_icons.py` writes the 1024 px app icon and the header bee into the asset catalog.
-* **Privacy:** `PrivacyInfo.xcprivacy` declares UserDefaults (reason CA92.1) and no tracking or collected data. The app makes no network calls, but iOS has no network permission to leave out, so this rests on the code alone.
+* **Settings and backups (§4.3, `VISION.md` §6):** the settings are `Application Support/Sumbee/settings.json`, not `UserDefaults`, which iOS copies to iCloud and computer backups. The folder is marked `isExcludedFromBackup`, the counterpart of Android's `allowBackup="false"`. The mark is on the folder because an atomic write replaces the file and would drop a mark set on it. The restoration snapshot leaves the name out and takes it back from the settings, since scene state isn't covered by that mark.
+* **Privacy:** `PrivacyInfo.xcprivacy` declares no tracking and no collected data, plus the system-uptime API (reason 35F9.1) for the session clock. The app makes no network calls, but iOS has no network permission to leave out, so this rests on the code alone. `ITSAppUsesNonExemptEncryption` is false, so uploads skip the export-compliance question.
+* **Store screenshots:** `design/store/ios/`, 1320×2868 (6.9″), from `SumbeeUITests` on the iPhone 18 Pro Max simulator with `xcrun simctl status_bar … override --time 9:41` and `TEST_RUNNER_SCREENSHOT_DIR` set.
 * **Tests:**
-  * `SumbeeCoreTests` (Swift Testing, 31 tests) ports `DeckGeneratorTest` and `SessionViewModelTest`. It adds checks for a stopped clock, restoring a decided card, bad snapshots and the UserDefaults store. Run it with `swift test`.
+  * `SumbeeCoreTests` (Swift Testing, 34 tests) ports `DeckGeneratorTest` and `SessionViewModelTest`. It adds checks for a stopped clock, restoring a decided card, bad snapshots, the settings file and its backup exclusion, and the name staying out of the snapshot. Run it with `swift test`.
   * `SumbeeUITests` plays a full 25-card session (right answer, nudge, reveal, Results, Play again, the ✕ exit), then checks that one ✕ tap doesn't leave.
   * *Not covered by a test:* restoration after iOS ends the app, which XCUITest can't trigger. Check it from Xcode by sending the app home and stopping it, then running again.

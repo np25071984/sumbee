@@ -305,19 +305,59 @@ extension SessionModel {
 @MainActor
 struct SettingsStoreTests {
 
-    @Test func settingsRoundTripAndSanitizeBadValues() {
-        let defaults = UserDefaults(suiteName: "SettingsStoreTests")!
-        defaults.removePersistentDomain(forName: "SettingsStoreTests")
-        let store = UserDefaultsSettingsStore(defaults: defaults)
+    private let dir = FileManager.default.temporaryDirectory.appendingPathComponent("SettingsStoreTests-\(UUID())")
+
+    @Test func settingsRoundTripAndSanitizeBadValues() throws {
+        let store = FileSettingsStore(directory: dir)
+        defer { store.reset() }
         #expect(store.load() == SessionConfig())
 
         let config = SessionConfig(name: "Zoë", maxNumber: 45, ops: [.minus, .divide], cardCount: 75)
         store.save(config)
-        #expect(UserDefaultsSettingsStore(defaults: defaults).load() == config)
+        #expect(FileSettingsStore(directory: dir).load() == config)
 
-        defaults.set(7, forKey: "count")
-        defaults.set(["NOPE"], forKey: "ops")
+        let odd = SessionConfig(name: "Zoë", maxNumber: 45, ops: [], cardCount: 7)
+        try JSONEncoder().encode(odd).write(to: dir.appendingPathComponent("settings.json"))
         #expect(store.load() == SessionConfig(name: "Zoë", maxNumber: 45, ops: [.plus], cardCount: 25))
-        defaults.removePersistentDomain(forName: "SettingsStoreTests")
+
+        try "not json".write(to: dir.appendingPathComponent("settings.json"), atomically: true, encoding: .utf8)
+        #expect(store.load() == SessionConfig())
+    }
+
+    /// The name must not reach iCloud or computer backups (VISION.md §6).
+    @Test func settingsAreExcludedFromBackup() throws {
+        let store = FileSettingsStore(directory: dir)
+        defer { store.reset() }
+        store.save(SessionConfig(name: "Jenny"))
+        store.save(SessionConfig(name: "Jenny")) // an atomic rewrite must not lose the mark
+        #expect(try dir.resourceValues(forKeys: [.isExcludedFromBackupKey]).isExcludedFromBackup == true)
+    }
+
+    @Test func resetForgetsEverything() {
+        let store = FileSettingsStore(directory: dir)
+        store.save(SessionConfig(name: "Jenny"))
+        store.reset()
+        #expect(store.load() == SessionConfig())
+        #expect(!FileManager.default.fileExists(atPath: dir.path))
+    }
+}
+
+@MainActor
+struct SnapshotPrivacyTests {
+
+    @Test func theSnapshotLeavesTheNameOut() throws {
+        let store = FakeStore(SessionConfig(name: "Jenny"))
+        let m = SessionModel(settings: store, scheduler: TestScheduler(), newSeed: { 7 })
+        m.start()
+        let json = String(decoding: try JSONEncoder().encode(m.snapshot!), as: UTF8.self)
+        #expect(!json.contains("Jenny"))
+
+        // The name comes back from the settings.
+        let restored = SessionModel(settings: store, scheduler: TestScheduler(), restoring: m.snapshot)
+        if case .cards(let s) = restored.state {
+            #expect(s.name == "Jenny")
+        } else {
+            Issue.record("expected cards, got \(restored.state)")
+        }
     }
 }
