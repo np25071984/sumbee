@@ -10,9 +10,9 @@ final class SessionUITests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
         app = XCUIApplication()
-        // Seed 42 opens with 10 × 3, 6 × 8 and 10 + 16 for "Jenny", + and ×, numbers up to 20: good
+        // Seed 16 opens with 7 × 9, 6 × 6 and 10 + 4 for "Jenny", + and ×, numbers up to 20: good
         // cards for the store screenshots. Any seed works for the test itself.
-        app.launchArguments = ["-uiTesting", "-seed", "42"]
+        app.launchArguments = ["-uiTesting", "-seed", "16"]
         app.launch()
     }
 
@@ -20,7 +20,10 @@ final class SessionUITests: XCTestCase {
         XCTAssertTrue(app.buttons["start"].waitForExistence(timeout: 5))
         let name = app.textFields["name"]
         name.tap()
+        // On a freshly booted simulator, typing before the keyboard is up drops letters.
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 10))
         name.typeText("Jenny\n")
+        XCTAssertEqual(name.value as? String, "Jenny")
         app.buttons["op.TIMES"].tap()
         XCTAssertTrue(app.buttons["op.TIMES"].isSelected)
         Thread.sleep(forTimeInterval: 0.5) // let the tile finish changing colour
