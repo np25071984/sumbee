@@ -21,12 +21,18 @@ struct RootView: View {
             guard model == nil else { return }
             // UI tests start from a fresh install's state every run.
             let settings = FileSettingsStore()
-            if CommandLine.arguments.contains("-uiTesting") {
+            var newSeed = { UInt64.random(in: .min ... .max) }
+            let args = CommandLine.arguments
+            if args.contains("-uiTesting") {
                 settings.reset()
                 saved = nil
+                // `-seed N` deals the same decks every run, so store screenshots show chosen cards.
+                if let i = args.firstIndex(of: "-seed"), i + 1 < args.count, var seed = UInt64(args[i + 1]) {
+                    newSeed = { defer { seed += 1 }; return seed }
+                }
             }
             let snapshot = saved.flatMap { try? JSONDecoder().decode(SessionSnapshot.self, from: $0) }
-            model = SessionModel(settings: settings, scheduler: TaskScheduler(), restoring: snapshot)
+            model = SessionModel(settings: settings, scheduler: TaskScheduler(), restoring: snapshot, newSeed: newSeed)
         }
         .onChange(of: phase) { _, phase in
             switch phase {

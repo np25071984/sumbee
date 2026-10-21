@@ -10,7 +10,9 @@ final class SessionUITests: XCTestCase {
     override func setUp() {
         continueAfterFailure = false
         app = XCUIApplication()
-        app.launchArguments = ["-uiTesting"]
+        // Seed 42 opens with 10 × 3, 6 × 8 and 10 + 16 for "Jenny", + and ×, numbers up to 20: good
+        // cards for the store screenshots. Any seed works for the test itself.
+        app.launchArguments = ["-uiTesting", "-seed", "42"]
         app.launch()
     }
 
