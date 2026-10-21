@@ -37,16 +37,18 @@ class DeckGeneratorTest {
         val n = config.maxNumber
         assertEquals("size $what", config.cardCount, cards.size)
 
-        // FR-2.1–2.3: never relaxed.
+        // FR-2.1–2.3: never relaxed. × and ÷ stay within the times tables.
+        val t = minOf(n, Operation.TABLE_MAX)
         for (c in cards) {
             assertTrue("op $c $what", c.op in config.ops)
             when (c.op) {
-                Operation.PLUS, Operation.TIMES -> assertTrue("bounds $c $what", c.a in 0..n && c.b in 0..n)
+                Operation.PLUS -> assertTrue("bounds $c $what", c.a in 0..n && c.b in 0..n)
+                Operation.TIMES -> assertTrue("bounds $c $what", c.a in 0..t && c.b in 0..t)
                 Operation.MINUS -> assertTrue("bounds $c $what", c.a in 0..n && c.b in 0..c.a)
                 Operation.DIVIDE -> {
-                    assertTrue("divisor $c $what", c.b in 1..n)
+                    assertTrue("divisor $c $what", c.b in 1..t)
                     assertEquals("whole $c $what", 0, c.a % c.b)
-                    assertTrue("quotient $c $what", c.answer in 0..n)
+                    assertTrue("quotient $c $what", c.answer in 0..t)
                 }
             }
             assertTrue("negative $c $what", c.answer >= 0)
@@ -114,6 +116,19 @@ class DeckGeneratorTest {
             val config = SessionConfig(maxNumber = 5, ops = setOf(op), cardCount = count)
             assertEquals("$op $count", count, DeckGenerator.generate(config, Random(3)).cards.size)
         }
+    }
+
+    @Test
+    fun timesTablesStopAt12() {
+        // N above 12 widens + and − only; × and ÷ keep the 12 times table (FR-2.1).
+        assertEquals(91, DeckGenerator.pool(Operation.TIMES, 20).size)
+        assertEquals(DeckGenerator.pool(Operation.TIMES, 12), DeckGenerator.pool(Operation.TIMES, 100))
+        assertEquals(156, DeckGenerator.pool(Operation.DIVIDE, 100).size)
+        assertEquals(21, DeckGenerator.pool(Operation.TIMES, 5).size) // below 12, N still rules
+        assertEquals(5151, DeckGenerator.pool(Operation.PLUS, 100).size)
+        assertEquals(3, SessionConfig(maxNumber = 100, ops = setOf(Operation.TIMES)).maxDigits) // 144
+        assertEquals(2, SessionConfig(maxNumber = 100, ops = setOf(Operation.DIVIDE)).maxDigits) // 12
+        assertEquals(3, SessionConfig(maxNumber = 100, ops = setOf(Operation.PLUS, Operation.DIVIDE)).maxDigits) // 200
     }
 
     @Test

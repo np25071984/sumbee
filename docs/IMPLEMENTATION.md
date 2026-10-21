@@ -28,7 +28,7 @@
 android/app/src/main/kotlin/dev/sumbee/
   MainActivity.kt          // splash, edge-to-edge, lifecycle → clock, setContent { App(vm) }
   model/
-    Operation.kt           // enum PLUS, MINUS, TIMES, DIVIDE + symbol, maxAnswer
+    Operation.kt           // enum PLUS, MINUS, TIMES, DIVIDE + symbol, limit, maxAnswer
     Card.kt                // data class Card(op, a, b): answer, isTrivial, canonical, isNearTo
     SessionConfig.kt       // name, maxNumber, ops, cardCount; limits, sanitizing, name filter
     DeckGenerator.kt       // pure Kotlin, FR-2 (no Android imports)
@@ -101,7 +101,7 @@ The delays run as `viewModelScope` coroutines. Input is ignored while `feedback`
 
 `DeckGenerator.generate(config, random: Random): List<Card>` is pure and deterministic for a given seed.
 
-1. **Pools.** For each selected op, enumerate every valid card under FR-2.1–2.3, deduplicated by canonical form: for + and ×, `(min(a,b), max(a,b))`. At N = 100 that is about 5.1k cards for +, −, × and about 10.1k for ÷, under 1 ms. Display order for + and × is randomised per draw, so `4 + 6` and `6 + 4` both appear over time.
+1. **Pools.** For each selected op, enumerate every valid card under FR-2.1–2.3, deduplicated by canonical form: for + and ×, `(min(a,b), max(a,b))`. At N = 100 that is about 5.1k cards for + and −. × and ÷ stop at the 12 times table (`Operation.limit`, FR-2.1), so from N = 12 up they are 91 and 156 cards. All of it takes under 1 ms. Display order for + and × is randomised per draw, so `4 + 6` and `6 + 4` both appear over time.
 2. **Op sequence (FR-2.4).** Fill C slots round-robin (⌊C/k⌋ or ⌈C/k⌉ each) and shuffle. Then repair any run of more than 2 of the same op by swapping with the nearest different op later in the sequence.
 3. **Fill slots.** For slot i with op o, shuffle o's pool lazily: draw random indices and track the ones tried. Accept the first candidate that passes all of:
    * not already used (FR-2.5, canonical form);
@@ -122,7 +122,7 @@ The delays run as `viewModelScope` coroutines. Input is ignored while `feedback`
 The worst case is bounded: at most |pool| draws per slot per relaxation level, 4 levels and 100 slots. That is far below the 50 ms budget.
 
 ### 4.2 Keypad digit limit (FR-3.2)
-`maxDigits = max over selected ops of digits(maxAnswer(op, N))`, where maxAnswer is 2N for +, N for −, N² for × and N for ÷.
+`maxDigits = max over selected ops of digits(maxAnswer(op, N))`, where maxAnswer is 2N for +, N for −, T² for × and T for ÷, with T = min(N, 12).
 
 ### 4.3 Settings persistence (FR-1.6)
 `SettingsRepository` wraps `DataStore<Preferences>` with keys `name`, `n`, `ops` (a string set) and `count`. Reads are a `Flow` collected in the ViewModel. `UiState.Setup` starts with the defaults and updates when the first value arrives, so nothing blocks the first frame. Values are written on Start.
@@ -202,7 +202,7 @@ ios/
 * **Icons:** the stroke icons are SwiftUI `Path`s on the same 24-unit grid. `build_icons.py` writes the 1024 px app icon and the header bee into the asset catalog.
 * **Settings and backups (§4.3, `VISION.md` §6):** the settings are `Application Support/Sumbee/settings.json`, not `UserDefaults`, which iOS copies to iCloud and computer backups. The folder is marked `isExcludedFromBackup`, the counterpart of Android's `allowBackup="false"`. The mark is on the folder because an atomic write replaces the file and would drop a mark set on it. The restoration snapshot leaves the name out and takes it back from the settings, since scene state isn't covered by that mark.
 * **Privacy:** `PrivacyInfo.xcprivacy` declares no tracking and no collected data, plus the system-uptime API (reason 35F9.1) for the session clock. The app makes no network calls, but iOS has no network permission to leave out, so this rests on the code alone. `ITSAppUsesNonExemptEncryption` is false, so uploads skip the export-compliance question.
-* **Store screenshots:** `design/store/ios/`, 1320×2868 (6.9″), next to Android's in `design/store/android/`. They come from `SumbeeUITests` on the iPhone 18 Pro Max simulator, with `xcrun simctl status_bar … override --time 9:41` and `TEST_RUNNER_SCREENSHOT_DIR` set. The test launches the app with `-uiTesting -seed 42` (the seed is honoured only with `-uiTesting`), so every run deals the same cards: 10 × 3, then 6 × 8 for the nudge, then 10 + 16.
+* **Store screenshots:** `design/store/ios/`, 1320×2868 (6.9″), next to Android's in `design/store/android/`. They come from `SumbeeUITests` on the iPhone 18 Pro Max simulator, with `xcrun simctl status_bar … override --time 9:41` and `TEST_RUNNER_SCREENSHOT_DIR` set. The test launches the app with `-uiTesting -seed 16` (the seed is honoured only with `-uiTesting`), so every run deals the same cards: 7 × 9, then 6 × 6 for the nudge, then 10 + 4.
 * **Tests:**
   * `SumbeeCoreTests` (Swift Testing, 34 tests) ports `DeckGeneratorTest` and `SessionViewModelTest`. It adds checks for a stopped clock, restoring a decided card, bad snapshots, the settings file and its backup exclusion, and the name staying out of the snapshot. Run it with `swift test`.
   * `SumbeeUITests` plays a full 25-card session (right answer, nudge, reveal, Results, Play again, the ✕ exit), then checks that one ✕ tap doesn't leave.

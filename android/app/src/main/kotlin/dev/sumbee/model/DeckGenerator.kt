@@ -56,13 +56,14 @@ object DeckGenerator {
         return Deck(deck, level)
     }
 
-    /** Every valid card for [op] with operands up to [n], one per canonical form (FR-2.1–2.3). */
+    /** Every valid card for [op] at "numbers up to [n]", one per canonical form (FR-2.1–2.3). */
     fun pool(op: Operation, n: Int): List<Card> {
+        val m = op.limit(n)
         val cards = ArrayList<Card>()
         when (op) {
-            Operation.PLUS, Operation.TIMES -> for (a in 0..n) for (b in a..n) cards += Card(op, a, b)
-            Operation.MINUS -> for (a in 0..n) for (b in 0..a) cards += Card(op, a, b)
-            Operation.DIVIDE -> for (b in 1..n) for (q in 0..n) cards += Card(op, b * q, b)
+            Operation.PLUS, Operation.TIMES -> for (a in 0..m) for (b in a..m) cards += Card(op, a, b)
+            Operation.MINUS -> for (a in 0..m) for (b in 0..a) cards += Card(op, a, b)
+            Operation.DIVIDE -> for (b in 1..m) for (q in 0..m) cards += Card(op, b * q, b)
         }
         return cards
     }
