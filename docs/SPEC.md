@@ -198,8 +198,8 @@ Setup, Cards and Results are three states of a single screen. There is no naviga
 Every action is a tap, or a swipe on a slider. Nothing is hidden behind a long-press, a hamburger menu or an overflow menu.
 
 ### FR-6.3 Layout
-* Portrait only, except on iPad, which turns to any orientation: iPadOS lets the user resize any app's window, so an app can't lock it. The phone-width column fits an iPad in landscape.
-* Works from 4.5" phones to 10" tablets. On large screens the content is centred with a max width, and the keypad scales up. On iPad the whole layout scales up, by up to 1.5× (`IMPLEMENTATION.md` §8).
+* Portrait only, except on tablets. Android 16 ignores the portrait lock on large screens for apps targeting API 36+, and iPad turns to any orientation: iPadOS lets the user resize any app's window, so an app can't lock it. The phone-width column fits an iPad in landscape.
+* Works from 4.5" phones to 10" tablets. On large screens the content is centred with a max width, and the whole layout scales up, by up to 1.5×, as far as the window's width and height both allow. Phones stay at 1× (`IMPLEMENTATION.md` §5, §8).
 * Setup never scrolls on a 5" phone.
 * Respects system font scale up to 1.3× without clipping.
 
