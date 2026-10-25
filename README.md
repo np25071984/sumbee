@@ -1,14 +1,14 @@
 # Sumbee
 
-Sumbee is a free, offline Android app for daily arithmetic practice, for kids aged 5–12. You pick how big the numbers go, which operations to practice and how many cards, then tap Start. The child answers each card on a big on-screen keypad, and at the end sees their score and time. That is the whole app.
+Sumbee is a free, offline app for Android and iPhone for daily arithmetic practice, for kids aged 5–12. You pick how big the numbers go, which operations to practice and how many cards, then tap Start. The child answers each card on a big on-screen keypad, and at the end sees their score and time. That is the whole app.
 
-An iPhone version with the same features lives in `ios/`. It isn't on the App Store.
+The Android app lives in `android/` and the iPhone app in `ios/`. They have the same features.
 
 The name is "sum" plus "spelling bee": a math bee. The icon is a bee with a plus on its back.
 
 ## The idea
 
-Sumbee was built for one child: a 2nd grader whose school asks for math practice every day. If the child keeps using it (at least 5 days a week for 3 weeks, without being pushed), it ships free to everyone on Google Play.
+Sumbee was built for one child: a 2nd grader whose school asks for math practice every day. If the child keeps using it (at least 5 days a week for 3 weeks, without being pushed), it ships free to everyone. It did, so Sumbee is going to Google Play and the App Store.
 
 Two rules come before everything else:
 
@@ -36,7 +36,10 @@ It is free by decision: ads would cost the speed, and a paid unlock would split 
 
 ## Status
 
-Milestone 1, the family build, is version 0.1 and is installed straight onto the device, not through Play. Next is M2, 2–3 weeks of everyday use by the first child, then a decision whether to publish to Google Play's Designed for Families program (M3).
+Version 0.3. The family build (M1) and the validation weeks (M2) are done, and the decision was to publish (M3).
+
+- **Google Play:** in closed testing since 0.1 (October 2026). Production access was applied for on 2026-10-25 and is under review.
+- **App Store:** being submitted for review, built from the same version.
 
 ## Documentation
 
@@ -76,7 +79,7 @@ xcodebuild test -project Sumbee.xcodeproj -scheme Sumbee \
   -destination 'platform=iOS Simulator,name=iPhone 17'   # UI test: plays a full session
 ```
 
-Set `TEST_RUNNER_SCREENSHOT_DIR=<folder>` on the `xcodebuild test` line to save a screenshot of each screen. To run on your own iPhone, pick it as the destination in Xcode and sign with your Apple ID. Publishing would need an Apple Developer account.
+Set `TEST_RUNNER_SCREENSHOT_DIR=<folder>` on the `xcodebuild test` line to save a screenshot of each screen. To run on your own iPhone, pick it as the destination in Xcode and sign with your Apple ID. Publishing needs an Apple Developer account.
 
 ## Release signing
 
