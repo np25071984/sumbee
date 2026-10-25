@@ -20,7 +20,7 @@
     <string name="nudge">Точно? Перевір ще раз.</string>
     <string name="correct">Правильно!</string>
     <string name="reveal">Відповідь: %1$d</string>
-    <string name="back_hint">Натисни «Назад» ще раз, щоб вийти</string>
+    <string name="back_hint">Натисни ще раз, щоб вийти</string>
     <string name="key_delete">Стерти</string>
     <string name="key_submit">Перевірити відповідь</string>
     <string name="answer_description">Твоя відповідь</string>
