@@ -2,7 +2,7 @@
 
 ## 1. Executive Summary
 
-Sumbee is a **free, offline Android app for daily arithmetic practice, for kids aged 5–12.** The child (or a parent, once) picks how big the numbers go, which operations to practise and how many cards, then taps Start. The child answers each card on a big on-screen keypad and at the end sees their score and time. That is the whole product.
+Sumbee is a **free, offline Android app for daily arithmetic practice, for kids aged 5–12.** The child (or a parent, once) picks how big the numbers go, which operations to practice and how many cards, then taps Start. The child answers each card on a big on-screen keypad and at the end sees their score and time. That is the whole product.
 
 The name, chosen 2026-10-08, is "sum" plus "spelling bee": a math bee. The icon is a bee with a plus on its back. A Google Play search that day found no math app with the name, only an unrelated "Sumbee.mn". A trademark search is still to do before M3.
 
@@ -63,7 +63,7 @@ Staying free keeps the product's edge (instant, simple, nothing collected) intac
 ## 3. Audience
 
 ### 3.1 The first user
-A 2nd grader who must practise math daily. This child is the validation (§5).
+A 2nd grader who must practice math daily. This child is the validation (§5).
 
 ### 3.2 Kids 5–12
 The public audience. Younger kids use small ranges (N = 5 for "sums up to 10", + and −). Older kids use larger ranges with × and ÷. The same app covers both because the range and operations are chosen per session.

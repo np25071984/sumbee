@@ -99,7 +99,7 @@ struct SetupView: View {
 
     private var opsBlock: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Practise").font(Fonts.nunito(17)).foregroundStyle(Palette.muted)
+            Text("Practice").font(Fonts.nunito(17)).foregroundStyle(Palette.muted)
             HStack(spacing: 10) {
                 ForEach(MathOperation.allCases, id: \.self) { op in
                     let on = config.ops.contains(op)
