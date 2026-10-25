@@ -18,6 +18,12 @@
             "state": "translated",
             "value": "Puntos de %@:"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pontos de %@:"
+          }
         }
       }
     },
@@ -34,6 +40,12 @@
             "state": "translated",
             "value": "%1$lld de %2$lld"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld de %2$lld"
+          }
         }
       }
     },
@@ -43,6 +55,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Suma"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adição"
           }
         }
       }
@@ -54,6 +72,12 @@
             "state": "translated",
             "value": "¿Lo revisas otra vez?"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tem certeza? Veja de novo."
+          }
         }
       }
     },
@@ -63,6 +87,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Cambiar ajustes"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mudar configurações"
           }
         }
       }
@@ -74,6 +104,12 @@
             "state": "translated",
             "value": "Comprobar respuesta"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conferir resposta"
+          }
         }
       }
     },
@@ -83,6 +119,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Correcto!"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correto!"
           }
         }
       }
@@ -94,6 +136,12 @@
             "state": "translated",
             "value": "Borrar"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar"
+          }
         }
       }
     },
@@ -103,6 +151,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "División"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Divisão"
           }
         }
       }
@@ -114,6 +168,12 @@
             "state": "translated",
             "value": "¿Cuántas tarjetas?"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quantos cartões?"
+          }
         }
       }
     },
@@ -123,6 +183,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Multiplicación"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Multiplicação"
           }
         }
       }
@@ -134,6 +200,12 @@
             "state": "translated",
             "value": "Números hasta"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Números até"
+          }
         }
       }
     },
@@ -143,6 +215,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Jugar otra vez"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jogar de novo"
           }
         }
       }
@@ -154,6 +232,12 @@
             "state": "translated",
             "value": "Practicar"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Praticar"
+          }
         }
       }
     },
@@ -163,6 +247,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "¡Vamos, %@!"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vamos lá, %@!"
           }
         }
       }
@@ -174,6 +264,12 @@
             "state": "translated",
             "value": "Empezar"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Começar"
+          }
         }
       }
     },
@@ -184,6 +280,12 @@
             "state": "translated",
             "value": "Salir"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sair"
+          }
         }
       }
     },
@@ -193,6 +295,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Resta"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subtração"
           }
         }
       }
@@ -207,6 +315,12 @@
             "state": "translated",
             "value": "Toca ✕ otra vez para salir"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toque em ✕ de novo para sair"
+          }
         }
       }
     },
@@ -216,6 +330,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "La respuesta es %lld"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A resposta é %lld"
           }
         }
       }
@@ -227,6 +347,12 @@
             "state": "translated",
             "value": "Tiempo"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tempo"
+          }
         }
       }
     },
@@ -236,6 +362,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "¿Cómo te llamas?"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Qual é o seu nome?"
           }
         }
       }
@@ -247,6 +379,12 @@
             "state": "translated",
             "value": "Tu respuesta"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sua resposta"
+          }
         }
       }
     },
@@ -257,6 +395,12 @@
             "state": "translated",
             "value": "Tu nombre"
           }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu nome"
+          }
         }
       }
     },
@@ -266,6 +410,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tus puntos:"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seus pontos:"
           }
         }
       }

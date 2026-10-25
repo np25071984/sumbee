@@ -17,8 +17,10 @@ final class SessionUITests: XCTestCase {
         // landscape, the shortest window an iPad gives the app. iPhone stays portrait regardless.
         let landscape = ProcessInfo.processInfo.environment["ORIENTATION"] == "landscape"
         XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
-        // LANGUAGE=es (TEST_RUNNER_LANGUAGE from xcodebuild) plays the same session in Spanish.
-        if language == "es" { app.launchArguments += ["-AppleLanguages", "(es)", "-AppleLocale", "es_MX"] }
+        // LANGUAGE=es or pt (TEST_RUNNER_LANGUAGE from xcodebuild) plays the same session in that language.
+        if let language, let region = ["es": "MX", "pt": "BR"][language] {
+            app.launchArguments += ["-AppleLanguages", "(\(language))", "-AppleLocale", "\(language)_\(region)"]
+        }
         app.launch()
     }
 
@@ -130,17 +132,29 @@ final class SessionUITests: XCTestCase {
 
     /// The text the app shows for `english` in the language under test (Localizable.xcstrings).
     private func t(_ english: String, _ arg: String = "") -> String {
-        let spanish = [
-            "Your name": "Tu nombre",
-            "Ready, Jenny?": "¡Vamos, Jenny!",
-            "Correct!": "¡Correcto!",
-            "Are you sure? Check again.": "¿Lo revisas otra vez?",
-            "The answer is %@": "La respuesta es %@",
-            "Jenny's score:": "Puntos de Jenny:",
-            "24 out of 25": "24 de 25",
-            "Tap ✕ again to stop": "Toca ✕ otra vez para salir",
+        let translations = [
+            "es": [
+                "Your name": "Tu nombre",
+                "Ready, Jenny?": "¡Vamos, Jenny!",
+                "Correct!": "¡Correcto!",
+                "Are you sure? Check again.": "¿Lo revisas otra vez?",
+                "The answer is %@": "La respuesta es %@",
+                "Jenny's score:": "Puntos de Jenny:",
+                "24 out of 25": "24 de 25",
+                "Tap ✕ again to stop": "Toca ✕ otra vez para salir",
+            ],
+            "pt": [
+                "Your name": "Seu nome",
+                "Ready, Jenny?": "Vamos lá, Jenny!",
+                "Correct!": "Correto!",
+                "Are you sure? Check again.": "Tem certeza? Veja de novo.",
+                "The answer is %@": "A resposta é %@",
+                "Jenny's score:": "Pontos de Jenny:",
+                "24 out of 25": "24 de 25",
+                "Tap ✕ again to stop": "Toque em ✕ de novo para sair",
+            ],
         ]
-        let text = language == "es" ? spanish[english] ?? english : english
+        let text = language.flatMap { translations[$0]?[english] } ?? english
         return text.replacingOccurrences(of: "%@", with: arg)
     }
 
