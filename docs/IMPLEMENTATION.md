@@ -161,7 +161,7 @@ All text lives in `strings.xml`, with placeholders such as `results_title_named 
 | Generator stalls on tiny pools | Relaxation levels with bounded draws (§4.1). The test matrix includes the smallest pools (N = 5, each op alone, 100 cards). |
 | Lost session on process death | `SavedStateHandle` plus a seed-based deck (§3.6). |
 | Keypad lag under background load | Leaf-level recomposition (§3.2), no animations on keystroke, and frame timing measured in benchmarks. |
-| Tablet layouts look stretched | Max content width and keypad scaling (FR-6.3). |
+| Tablet layouts look stretched | Max content width, and `App` scales the whole layout by raising `LocalDensity`: min(width / 480 dp, height / 860 dp), held between 1 and 1.5 (FR-6.3). Every dp and sp grows, so screens lay out again, sharp, with no per-screen code. The window is measured inside the system bars but not the keyboard, so typing a name doesn't rescale it. On tablets Android 16 ignores `screenOrientation`, and landscape fits at 1×. |
 
 ## 7. Build & Release
 
