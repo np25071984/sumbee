@@ -115,7 +115,7 @@ fun SetupContent(
             modifier = Modifier.fillMaxWidth().height(80.dp),
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                Text(stringResource(R.string.start), style = valueStyle)
+                Text(stringResource(R.string.start), style = valueStyle.copy(fontFamily = Fonts.Words))
                 Icon(Icons.ArrowRight, contentDescription = null, tint = Palette.Ink, modifier = Modifier.size(30.dp))
             }
         }

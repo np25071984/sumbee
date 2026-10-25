@@ -161,6 +161,7 @@
 				en,
 				es,
 				pt,
+				uk,
 				Base,
 			);
 			mainGroup = 5B0000000000000000000100;

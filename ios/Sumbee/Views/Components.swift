@@ -41,6 +41,11 @@ extension View {
     func digitsOnly(_ size: CGFloat) -> some View {
         padding(.top, -(1.078 - 0.602) * size).padding(.bottom, -0.524 * size)
     }
+
+    /// `digitsOnly` for a word in `Fonts.words`: the trim fits Baloo's line box, not Nunito's.
+    @ViewBuilder func wordsTrim(_ size: CGFloat) -> some View {
+        if Fonts.wordsInBaloo { digitsOnly(size) } else { self }
+    }
 }
 
 /// The handful of stroke icons the screens use, drawn on a 24-unit grid as on Android.

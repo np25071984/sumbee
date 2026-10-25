@@ -17,8 +17,8 @@ final class SessionUITests: XCTestCase {
         // landscape, the shortest window an iPad gives the app. iPhone stays portrait regardless.
         let landscape = ProcessInfo.processInfo.environment["ORIENTATION"] == "landscape"
         XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
-        // LANGUAGE=es or pt (TEST_RUNNER_LANGUAGE from xcodebuild) plays the same session in that language.
-        if let language, let region = ["es": "MX", "pt": "BR"][language] {
+        // LANGUAGE=es, pt or uk (TEST_RUNNER_LANGUAGE from xcodebuild) plays the same session in that language.
+        if let language, let region = ["es": "MX", "pt": "BR", "uk": "UA"][language] {
             app.launchArguments += ["-AppleLanguages", "(\(language))", "-AppleLocale", "\(language)_\(region)"]
         }
         app.launch()
@@ -152,6 +152,16 @@ final class SessionUITests: XCTestCase {
                 "Jenny's score:": "Pontos de Jenny:",
                 "24 out of 25": "24 de 25",
                 "Tap ✕ again to stop": "Toque em ✕ de novo para sair",
+            ],
+            "uk": [
+                "Your name": "Твоє ім’я",
+                "Ready, Jenny?": "Вперед, Jenny!",
+                "Correct!": "Правильно!",
+                "Are you sure? Check again.": "Точно? Перевір ще раз.",
+                "The answer is %@": "Відповідь: %@",
+                "Jenny's score:": "Jenny, твій результат:",
+                "24 out of 25": "24 з 25",
+                "Tap ✕ again to stop": "Торкнись ✕ ще раз, щоб вийти",
             ],
         ]
         let text = language.flatMap { translations[$0]?[english] } ?? english

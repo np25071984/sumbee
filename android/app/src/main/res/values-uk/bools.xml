@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Baloo 2 has no Cyrillic. -->
+    <bool name="words_in_baloo">false</bool>
+</resources>

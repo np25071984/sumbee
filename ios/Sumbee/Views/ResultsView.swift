@@ -17,7 +17,7 @@ struct ResultsView: View {
                         Text("\(state.name)'s score:")
                     }
                 }
-                .font(Fonts.baloo(40 * s))
+                .font(Fonts.words(40 * s))
                 .foregroundStyle(Palette.ink)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
@@ -30,7 +30,7 @@ struct ResultsView: View {
                 Button { model.playAgain() } label: {
                     HStack(spacing: 12 * s) {
                         IconView(icon: .playAgain, size: 30)
-                        Text("Play again").font(Fonts.baloo(36 * s)).foregroundStyle(Palette.ink).digitsOnly(36 * s)
+                        Text("Play again").font(Fonts.words(36 * s)).foregroundStyle(Palette.ink).wordsTrim(36 * s)
                     }
                 }
                 .buttonStyle(ChunkyButtonStyle(color: Palette.sun, base: Palette.sunShadow, radius: 24, depth: 6))

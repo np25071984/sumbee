@@ -3,6 +3,7 @@ package dev.sumbee.ui
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -43,6 +44,15 @@ object Fonts {
         Font(R.font.nunito, FontWeight.Bold, variationSettings = FontVariation.Settings(FontVariation.weight(700))),
         Font(R.font.nunito, FontWeight.ExtraBold, variationSettings = FontVariation.Settings(FontVariation.weight(800))),
     )
+
+    /** Nunito at its heaviest, standing in for Baloo's words where Baloo has no glyphs. */
+    private val NunitoBlack = FontFamily(
+        Font(R.font.nunito, FontWeight.ExtraBold, variationSettings = FontVariation.Settings(FontVariation.weight(900))),
+    )
+
+    /** The font for words set in Baloo: Start, Play again, the score title. Numbers stay in Baloo. */
+    val Words: FontFamily
+        @Composable get() = if (booleanResource(R.bool.words_in_baloo)) Baloo else NunitoBlack
 }
 
 @Composable
