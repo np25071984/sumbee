@@ -135,4 +135,4 @@ Free on Google Play, enrolled in the Designed for Families program, and on the A
 ## 7. Open Questions & Future Ideas (not committed)
 
 * **Weak-fact practice** ("give me more of the ones I missed") would need history, which §1.1 rules out. Revisit only if M2 shows a real need, and keep it on-device if so.
-* **Localization.** Strings are resources from day one (`IMPLEMENTATION.md` §4.6). Translations come after launch.
+* **Localization.** English and Spanish, following the system language with English as the fallback (`IMPLEMENTATION.md` §4.6). More languages when a native speaker can check them. Each needs its own store listing too.

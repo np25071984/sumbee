@@ -20,6 +20,12 @@ android {
         compose = true
     }
 
+    // Lists values-* languages for Android 13+'s per-app language setting; the app follows the
+    // system language either way, and English is the fallback (res/resources.properties).
+    androidResources {
+        generateLocaleConfig = true
+    }
+
     // The Play upload key lives outside the repo; its path and passwords come from
     // ~/.gradle/gradle.properties (README "Release signing"). Google re-signs with the app signing
     // key it holds (Play App Signing).
