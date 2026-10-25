@@ -12,7 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 class TranslationsTest {
 
     private val res = File("src/main/res")
-    private val languages = listOf("es", "pt")
+    private val languages = listOf("es", "pt", "uk")
 
     @Test
     fun everyLanguageHasEveryStringWithTheSamePlaceholders() {

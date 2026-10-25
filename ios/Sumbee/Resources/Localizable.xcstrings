@@ -24,6 +24,12 @@
             "state": "translated",
             "value": "Pontos de %@:"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, твій результат:"
+          }
         }
       }
     },
@@ -46,6 +52,12 @@
             "state": "translated",
             "value": "%1$lld de %2$lld"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld з %2$lld"
+          }
         }
       }
     },
@@ -61,6 +73,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adição"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додавання"
           }
         }
       }
@@ -78,6 +96,12 @@
             "state": "translated",
             "value": "Tem certeza? Veja de novo."
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точно? Перевір ще раз."
+          }
         }
       }
     },
@@ -93,6 +117,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mudar configurações"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Змінити налаштування"
           }
         }
       }
@@ -110,6 +140,12 @@
             "state": "translated",
             "value": "Conferir resposta"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перевірити відповідь"
+          }
         }
       }
     },
@@ -125,6 +161,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Correto!"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правильно!"
           }
         }
       }
@@ -142,6 +184,12 @@
             "state": "translated",
             "value": "Apagar"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стерти"
+          }
         }
       }
     },
@@ -157,6 +205,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Divisão"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ділення"
           }
         }
       }
@@ -174,6 +228,12 @@
             "state": "translated",
             "value": "Quantos cartões?"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скільки карток?"
+          }
         }
       }
     },
@@ -189,6 +249,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Multiplicação"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Множення"
           }
         }
       }
@@ -206,6 +272,12 @@
             "state": "translated",
             "value": "Números até"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Числа до"
+          }
         }
       }
     },
@@ -221,6 +293,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Jogar de novo"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ще раз"
           }
         }
       }
@@ -238,6 +316,12 @@
             "state": "translated",
             "value": "Praticar"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тренувати"
+          }
         }
       }
     },
@@ -253,6 +337,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Vamos lá, %@!"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вперед, %@!"
           }
         }
       }
@@ -270,6 +360,12 @@
             "state": "translated",
             "value": "Começar"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почати"
+          }
         }
       }
     },
@@ -286,6 +382,12 @@
             "state": "translated",
             "value": "Sair"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вийти"
+          }
         }
       }
     },
@@ -301,6 +403,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Subtração"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Віднімання"
           }
         }
       }
@@ -321,6 +429,12 @@
             "state": "translated",
             "value": "Toque em ✕ de novo para sair"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Торкнись ✕ ще раз, щоб вийти"
+          }
         }
       }
     },
@@ -336,6 +450,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "A resposta é %lld"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Відповідь: %lld"
           }
         }
       }
@@ -353,6 +473,12 @@
             "state": "translated",
             "value": "Tempo"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Час"
+          }
         }
       }
     },
@@ -368,6 +494,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Qual é o seu nome?"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Як тебе звати?"
           }
         }
       }
@@ -385,6 +517,12 @@
             "state": "translated",
             "value": "Sua resposta"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твоя відповідь"
+          }
         }
       }
     },
@@ -401,6 +539,12 @@
             "state": "translated",
             "value": "Seu nome"
           }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твоє ім’я"
+          }
         }
       }
     },
@@ -416,6 +560,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Seus pontos:"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твій результат:"
           }
         }
       }

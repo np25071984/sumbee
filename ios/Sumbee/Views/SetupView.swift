@@ -43,7 +43,7 @@ struct SetupView: View {
                 model.start()
             } label: {
                 HStack(spacing: 12 * s) {
-                    Text("Start").font(Fonts.baloo(36 * s)).digitsOnly(36 * s)
+                    Text("Start").font(Fonts.words(36 * s)).wordsTrim(36 * s)
                     IconView(icon: .arrowRight, size: 30)
                 }
                 .foregroundStyle(Palette.ink)

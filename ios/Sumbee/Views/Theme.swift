@@ -38,6 +38,15 @@ enum Fonts {
     static func nunito(_ size: CGFloat, _ weight: Font.Weight = .heavy) -> Font {
         .custom("Nunito", fixedSize: size).weight(weight)
     }
+
+    /// Whether Baloo 2 can draw the words of the language on screen. It covers Latin and Devanagari only,
+    /// so a Cyrillic, Greek or CJK translation goes here and its words use Nunito Black.
+    static let wordsInBaloo = !["uk"].contains(Bundle.main.preferredLocalizations.first ?? "en")
+
+    /// The font for words set in Baloo: Start, Play again, the score title. Numbers stay in Baloo.
+    static func words(_ size: CGFloat) -> Font {
+        wordsInBaloo ? baloo(size) : nunito(size, .black)
+    }
 }
 
 extension Color {

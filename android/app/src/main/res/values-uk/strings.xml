@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ukrainian: informal «ти», and no word that takes the child's gender (no «Готовий?» or «Ти впевнений?»),
+     since the app doesn't know it. Names decline in Ukrainian, so the child's name is never put in a
+     case: «Jenny, твій результат:», not a genitive. Baloo 2 has no Cyrillic (values-uk/bools.xml). -->
+<resources>
+    <!-- Setup (FR-1) -->
+    <string name="name_label">Як тебе звати?</string>
+    <string name="name_placeholder">Твоє ім’я</string>
+    <string name="range_label">Числа до</string>
+    <string name="ops_label">Тренувати</string>
+    <string name="cards_label">Скільки карток?</string>
+    <string name="start">Почати</string>
+    <string name="op_plus">Додавання</string>
+    <string name="op_minus">Віднімання</string>
+    <string name="op_times">Множення</string>
+    <string name="op_divide">Ділення</string>
+
+    <!-- Cards (FR-3) -->
+    <string name="greeting">Вперед, %1$s!</string>
+    <string name="nudge">Точно? Перевір ще раз.</string>
+    <string name="correct">Правильно!</string>
+    <string name="reveal">Відповідь: %1$d</string>
+    <string name="back_hint">Натисни «Назад» ще раз, щоб вийти</string>
+    <string name="key_delete">Стерти</string>
+    <string name="key_submit">Перевірити відповідь</string>
+    <string name="answer_description">Твоя відповідь</string>
+
+    <!-- Results (FR-4, FR-5) -->
+    <string name="results_title_named">%1$s, твій результат:</string>
+    <string name="results_title">Твій результат:</string>
+    <string name="time">Час</string>
+    <string name="play_again">Ще раз</string>
+</resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Whether Baloo 2 can draw this language's words. It covers Latin and Devanagari only, so a
+         Cyrillic, Greek or CJK translation sets it false and its words use Nunito Black (Fonts.Words).
+         A resource rather than a locale check, so it follows the language the app actually shows. -->
+    <bool name="words_in_baloo">true</bool>
+</resources>

@@ -49,7 +49,7 @@ fun ResultsContent(state: UiState.Results, onPlayAgain: () -> Unit) {
             Text(
                 text = if (state.name.isNotBlank()) stringResource(R.string.results_title_named, state.name)
                 else stringResource(R.string.results_title),
-                style = big.copy(fontSize = 40.sp, textAlign = TextAlign.Center),
+                style = big.copy(fontSize = 40.sp, fontFamily = Fonts.Words, textAlign = TextAlign.Center),
                 modifier = Modifier.fillMaxWidth().semantics { heading() },
             )
             ScoreCard(state.correct, state.total)
@@ -85,7 +85,7 @@ fun ResultsContent(state: UiState.Results, onPlayAgain: () -> Unit) {
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Icon(Icons.PlayAgain, contentDescription = null, tint = Palette.Ink, modifier = Modifier.size(30.dp))
-                Text(stringResource(R.string.play_again), style = big.copy(fontSize = 36.sp))
+                Text(stringResource(R.string.play_again), style = big.copy(fontSize = 36.sp, fontFamily = Fonts.Words))
             }
         }
     }
