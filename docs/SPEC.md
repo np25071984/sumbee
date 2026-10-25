@@ -199,7 +199,7 @@ Every action is a tap, or a swipe on a slider. Nothing is hidden behind a long-p
 
 ### FR-6.3 Layout
 * Portrait only, except on iPad, which turns to any orientation: iPadOS lets the user resize any app's window, so an app can't lock it. The phone-width column fits an iPad in landscape.
-* Works from 4.5" phones to 10" tablets. On large screens the content is centred with a max width, and the keypad scales up.
+* Works from 4.5" phones to 10" tablets. On large screens the content is centred with a max width, and the keypad scales up. On iPad the whole layout scales up, by up to 1.5× (`IMPLEMENTATION.md` §8).
 * Setup never scrolls on a 5" phone.
 * Respects system font scale up to 1.3× without clipping.
 

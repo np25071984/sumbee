@@ -23,6 +23,12 @@ enum Palette {
     static let white = Color.white
 }
 
+extension EnvironmentValues {
+    /// How much bigger than its phone size the layout draws: 1 on every phone, up to 1.5 on a tall iPad
+    /// (FR-6.3). Every view multiplies its own sizes by it, so text and shapes stay sharp.
+    @Entry var uiScale: CGFloat = 1
+}
+
 /// Baloo 2 for numbers and headings, Nunito for everything else: both variable fonts, bundled.
 enum Fonts {
     static func baloo(_ size: CGFloat, _ weight: Font.Weight = .heavy) -> Font {

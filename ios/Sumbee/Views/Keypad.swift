@@ -11,15 +11,16 @@ struct Keypad: View {
     let onSubmit: () -> Void
     let submitEnabled: Bool
     var keyHeight: CGFloat = maxKeyHeight
+    @Environment(\.uiScale) private var s
 
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 10 * s) {
             ForEach(0..<3) { row in
-                HStack(spacing: 10) {
+                HStack(spacing: 10 * s) {
                     ForEach(1...3, id: \.self) { col in digitKey(row * 3 + col) }
                 }
             }
-            HStack(spacing: 10) {
+            HStack(spacing: 10 * s) {
                 Button(action: onDelete) { IconView(icon: .backspace, size: 32) }
                     .buttonStyle(ChunkyButtonStyle(color: Palette.soft, base: Palette.softShadow))
                     .frame(height: keyHeight)
@@ -38,7 +39,7 @@ struct Keypad: View {
 
     private func digitKey(_ digit: Int) -> some View {
         Button { onDigit(digit) } label: {
-            Text("\(digit)").font(Fonts.baloo(38, .bold)).foregroundStyle(Palette.ink)
+            Text("\(digit)").font(Fonts.baloo(38 * s, .bold)).foregroundStyle(Palette.ink)
         }
         .buttonStyle(ChunkyButtonStyle(color: Palette.white, base: Palette.keyShadow))
         .frame(height: keyHeight)

@@ -17,16 +17,17 @@ private struct ChunkyBody: View {
     let configuration: ButtonStyleConfiguration
     let style: ChunkyButtonStyle
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.uiScale) private var s
 
     var body: some View {
-        let shape = RoundedRectangle(cornerRadius: style.radius, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: style.radius * s, style: .continuous)
         ZStack {
-            shape.fill(style.base).padding(.top, style.depth)
+            shape.fill(style.base).padding(.top, style.depth * s)
             configuration.label
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(shape.fill(style.color))
-                .padding(.bottom, style.depth)
-                .offset(y: configuration.isPressed ? style.depth * 0.8 : 0)
+                .padding(.bottom, style.depth * s)
+                .offset(y: configuration.isPressed ? style.depth * 0.8 * s : 0)
         }
         .opacity(isEnabled ? 1 : 0.45)
         .contentShape(shape)
@@ -111,11 +112,12 @@ struct IconView: View {
     let icon: Icon
     var size: CGFloat = 24
     var color: Color = Palette.ink
+    @Environment(\.uiScale) private var s
 
     var body: some View {
         IconShape(icon: icon)
-            .stroke(color, style: StrokeStyle(lineWidth: icon.stroke * size / 24, lineCap: .round, lineJoin: .round))
-            .frame(width: size, height: size)
+            .stroke(color, style: StrokeStyle(lineWidth: icon.stroke * size * s / 24, lineCap: .round, lineJoin: .round))
+            .frame(width: size * s, height: size * s)
             .accessibilityHidden(true)
     }
 }
