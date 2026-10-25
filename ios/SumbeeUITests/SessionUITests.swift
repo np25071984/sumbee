@@ -13,6 +13,10 @@ final class SessionUITests: XCTestCase {
         // Seed 16 opens with 7 × 9, 6 × 6 and 10 + 4 for "Jenny", + and ×, numbers up to 20: good
         // cards for the store screenshots. Any seed works for the test itself.
         app.launchArguments = ["-uiTesting", "-seed", "16"]
+        // ORIENTATION=landscape (TEST_RUNNER_ORIENTATION from xcodebuild) plays the session in
+        // landscape, the shortest window an iPad gives the app. iPhone stays portrait regardless.
+        let landscape = ProcessInfo.processInfo.environment["ORIENTATION"] == "landscape"
+        XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
         app.launch()
     }
 
@@ -22,8 +26,13 @@ final class SessionUITests: XCTestCase {
         name.tap()
         // On a freshly booted simulator, typing before the keyboard is up drops letters.
         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 10))
-        name.typeText("Jenny\n")
+        // Even then it sometimes drops one, so clear and retype until the name is whole.
+        for _ in 0..<3 where name.value as? String != "Jenny" {
+            let typed = (name.value as? String).map { $0 == "Your name" ? 0 : $0.count } ?? 0
+            name.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: typed) + "Jenny")
+        }
         XCTAssertEqual(name.value as? String, "Jenny")
+        name.typeText("\n")
         app.buttons["op.TIMES"].tap()
         XCTAssertTrue(app.buttons["op.TIMES"].isSelected)
         Thread.sleep(forTimeInterval: 0.5) // let the tile finish changing colour

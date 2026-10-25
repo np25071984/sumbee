@@ -191,7 +191,7 @@ ios/
   Sumbee.xcodeproj         // folder-synchronized groups: new files need no project edits
 ```
 
-* **Stack:** SwiftUI, iOS 17+, iPhone only, portrait, no dependencies. Bundle id `dev.sumbee`, the same version numbers as Android.
+* **Stack:** SwiftUI, iOS 17+, iPhone (portrait) and iPad (any orientation, SPEC FR-6.3), no dependencies. Bundle id `dev.sumbee`, the same version numbers as Android.
 * **Decks** follow the same rules and pass the same tests, but they don't match Android's for a given seed. They don't need to, since nothing crosses platforms.
 * **Back (FR-3.6):** iOS has no system Back. On Cards, an ✕ in the header calls `back()`: one tap shows "Tap ✕ again to stop" for 2 s, and a second tap leaves. On Results, a **Change settings** link goes to Setup.
 * **Lifecycle and timing (§3.4):** `scenePhase` `.active` and `.background` call `onVisible()` and `onHidden()`.
@@ -202,7 +202,8 @@ ios/
 * **Icons:** the stroke icons are SwiftUI `Path`s on the same 24-unit grid. `build_icons.py` writes the 1024 px app icon and the header bee into the asset catalog.
 * **Settings and backups (§4.3, `VISION.md` §6):** the settings are `Application Support/Sumbee/settings.json`, not `UserDefaults`, which iOS copies to iCloud and computer backups. The folder is marked `isExcludedFromBackup`, the counterpart of Android's `allowBackup="false"`. The mark is on the folder because an atomic write replaces the file and would drop a mark set on it. The restoration snapshot leaves the name out and takes it back from the settings, since scene state isn't covered by that mark.
 * **Privacy:** `PrivacyInfo.xcprivacy` declares no tracking and no collected data, plus the system-uptime API (reason 35F9.1) for the session clock. The app makes no network calls, but iOS has no network permission to leave out, so this rests on the code alone. `ITSAppUsesNonExemptEncryption` is false, so uploads skip the export-compliance question.
-* **Store screenshots:** `design/store/ios/`, 1320×2868 (6.9″), next to Android's in `design/store/android/`. They come from `SumbeeUITests` on the iPhone 18 Pro Max simulator, with `xcrun simctl status_bar … override --time 9:41` and `TEST_RUNNER_SCREENSHOT_DIR` set. The test launches the app with `-uiTesting -seed 16` (the seed is honoured only with `-uiTesting`), so every run deals the same cards: 7 × 9, then 6 × 6 for the nudge, then 10 + 4.
+* **iPad:** the same views. `AppView` caps the content at 480 pt and centres it, as Android does on tablets. Keys stay at their phone size. `ORIENTATION=landscape` (`TEST_RUNNER_ORIENTATION` from xcodebuild) runs the UI test in landscape. The iPad mini in landscape is the shortest window an iPad gives the app, and everything fits there.
+* **Store screenshots:** `design/store/ios/`: `iphone-*` at 1320×2868 (6.9″) and `ipad-*` at 2064×2752 (13″), next to Android's in `design/store/android/`. They come from `SumbeeUITests` on the iPhone 18 Pro Max and iPad Pro 13-inch simulators, with `xcrun simctl status_bar … override --time 9:41` and `TEST_RUNNER_SCREENSHOT_DIR` set. The test launches the app with `-uiTesting -seed 16` (the seed is honoured only with `-uiTesting`), so every run deals the same cards: 7 × 9, then 6 × 6 for the nudge, then 10 + 4.
 * **Tests:**
   * `SumbeeCoreTests` (Swift Testing, 34 tests) ports `DeckGeneratorTest` and `SessionViewModelTest`. It adds checks for a stopped clock, restoring a decided card, bad snapshots, the settings file and its backup exclusion, and the name staying out of the snapshot. Run it with `swift test`.
   * `SumbeeUITests` plays a full 25-card session (right answer, nudge, reveal, Results, Play again, the ✕ exit), then checks that one ✕ tap doesn't leave.

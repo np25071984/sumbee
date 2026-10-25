@@ -1,8 +1,8 @@
 # Sumbee
 
-Sumbee is a free, offline app for Android and iPhone for daily arithmetic practice, for kids aged 5–12. You pick how big the numbers go, which operations to practice and how many cards, then tap Start. The child answers each card on a big on-screen keypad, and at the end sees their score and time. That is the whole app.
+Sumbee is a free, offline app for Android, iPhone and iPad for daily arithmetic practice, for kids aged 5–12. You pick how big the numbers go, which operations to practice and how many cards, then tap Start. The child answers each card on a big on-screen keypad, and at the end sees their score and time. That is the whole app.
 
-The Android app lives in `android/` and the iPhone app in `ios/`. They have the same features.
+The Android app lives in `android/` and the iPhone and iPad app in `ios/`. They have the same features.
 
 The name is "sum" plus "spelling bee": a math bee. The icon is a bee with a plus on its back.
 
@@ -25,7 +25,7 @@ A third rule follows from the audience: **gentle, not punishing.** A wrong answe
 - **A big keypad.** 0–9, ⌫ and ✓, with keys of at least 64 dp. The system keyboard never appears.
 - **A second chance.** After a wrong first answer the child can check and fix it. A correct second answer still counts. After a second miss, the right answer shows calmly before the next card.
 - **Progress and time.** A "7 / 25" counter and a running timer, which pauses when the app goes to the background.
-- **Results.** "Jenny's score: 21 / 25" and "Time 2:34". **Play again** starts a fresh deck with the same settings in one tap. Back goes to Setup to change them (on iPhone, **Change settings**).
+- **Results.** "Jenny's score: 21 / 25" and "Time 2:34". **Play again** starts a fresh deck with the same settings in one tap. Back goes to Setup to change them (on iPhone and iPad, **Change settings**).
 - **No accidental exits.** During a session, Back once shows "Press Back again to stop", and only a second Back leaves. iPhones have no Back button, so there the card screen has an ✕ that works the same way: tap it twice.
 
 ## What it is not
@@ -69,7 +69,7 @@ cd android
 
 ### iOS
 
-Requires Xcode 16+ with an iOS simulator runtime. The app is SwiftUI, iOS 17+, iPhone only. Its logic is the Swift package `ios/SumbeeCore`, a port of `model/` and `SessionViewModel`, so it can be tested on the Mac without a simulator.
+Requires Xcode 16+ with an iOS simulator runtime. The app is SwiftUI, iOS 17+, for iPhone and iPad. Its logic is the Swift package `ios/SumbeeCore`, a port of `model/` and `SessionViewModel`, so it can be tested on the Mac without a simulator.
 
 ```sh
 cd ios
