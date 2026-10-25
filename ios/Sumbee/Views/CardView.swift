@@ -9,14 +9,15 @@ private let cardChrome: CGFloat = 396
 struct CardView: View {
     let state: CardsState
     let model: SessionModel
+    @Environment(\.uiScale) private var s
 
     var body: some View {
         GeometryReader { geo in
             // Keys give up height, down to FR-3.2's 64 pt, before the problem has to shrink.
-            let keyHeight = min(max((geo.size.height - cardChrome) / 4, minKeyHeight), maxKeyHeight)
-            VStack(spacing: 14) {
+            let keyHeight = min(max((geo.size.height - cardChrome * s) / 4, minKeyHeight * s), maxKeyHeight * s)
+            VStack(spacing: 14 * s) {
                 ProgressHeader(number: state.index + 1, total: state.total, model: model)
-                VStack(spacing: 16) {
+                VStack(spacing: 16 * s) {
                     problem
                     AnswerBox(state: state)
                     messageSlot
@@ -27,7 +28,7 @@ struct CardView: View {
                     submitEnabled: !state.input.isEmpty && !state.busy, keyHeight: keyHeight
                 )
             }
-            .padding(EdgeInsets(top: 20, leading: 16, bottom: 16, trailing: 16))
+            .padding(EdgeInsets(top: 20 * s, leading: 16 * s, bottom: 16 * s, trailing: 16 * s))
         }
         // The screen stays on while cards show (FR-3.7); Setup and Results still sleep as usual.
         .onAppear { UIApplication.shared.isIdleTimerDisabled = true }
@@ -43,12 +44,12 @@ struct CardView: View {
     /// box, the message slot or the keypad.
     private var problem: some View {
         GeometryReader { geo in
-            let size = min(max(geo.size.height * 1.25, 24), 96)
+            let size = min(max(geo.size.height * 1.25, 24 * s), 96 * s)
             Text(state.card.text)
                 .font(Fonts.baloo(size))
                 .foregroundStyle(Palette.ink)
                 .lineLimit(1)
-                .minimumScaleFactor(24 / size)
+                .minimumScaleFactor(24 * s / size)
                 .digitsOnly(size)
                 .frame(width: geo.size.width, height: geo.size.height)
         }
@@ -71,10 +72,10 @@ struct CardView: View {
             } else if state.feedback == .reveal {
                 Pill(text: "The answer is \(state.card.answer)", background: Palette.soft, ink: Palette.ink)
             } else if state.index == 0 && state.attempt == 1 && !state.name.trimmingCharacters(in: .whitespaces).isEmpty {
-                Text("Ready, \(state.name)?").font(Fonts.nunito(22)).foregroundStyle(Palette.muted)
+                Text("Ready, \(state.name)?").font(Fonts.nunito(22 * s)).foregroundStyle(Palette.muted)
             }
         }
-        .frame(height: 52)
+        .frame(height: 52 * s)
         .accessibilityIdentifier("message")
     }
 
@@ -92,33 +93,34 @@ private struct ProgressHeader: View {
     let number: Int
     let total: Int
     let model: SessionModel
+    @Environment(\.uiScale) private var s
 
     var body: some View {
-        VStack(spacing: 10) {
-            HStack(spacing: 12) {
+        VStack(spacing: 10 * s) {
+            HStack(spacing: 12 * s) {
                 // ✕ stands in for Android's system Back: tap once to arm, again within 2 s to leave.
                 Button { model.back() } label: {
                     IconView(icon: .close, size: 18, color: Palette.muted)
-                        .frame(width: 40, height: 40)
+                        .frame(width: 40 * s, height: 40 * s)
                         .background(Palette.white, in: Circle())
-                        .overlay(Circle().strokeBorder(Palette.track, lineWidth: 2))
+                        .overlay(Circle().strokeBorder(Palette.track, lineWidth: 2 * s))
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Stop")
                 .accessibilityIdentifier("exit")
-                Text("\(number) / \(total)").font(Fonts.baloo(26)).foregroundStyle(Palette.ink)
+                Text("\(number) / \(total)").font(Fonts.baloo(26 * s)).foregroundStyle(Palette.ink)
                     .accessibilityIdentifier("progress")
                 Spacer()
                 TimerPill(model: model)
             }
-            .frame(height: 50)
+            .frame(height: 50 * s)
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Capsule().fill(Palette.track)
                     Capsule().fill(Palette.sun).frame(width: geo.size.width * CGFloat(number - 1) / CGFloat(total))
                 }
             }
-            .frame(height: 10)
+            .frame(height: 10 * s)
             .accessibilityHidden(true)
         }
     }
@@ -127,16 +129,17 @@ private struct ProgressHeader: View {
 /// The only reader of the clock, so a tick redraws this pill and nothing else (IMPLEMENTATION.md §3.4).
 private struct TimerPill: View {
     let model: SessionModel
+    @Environment(\.uiScale) private var s
 
     var body: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 6 * s) {
             IconView(icon: .clock, size: 18, color: Palette.muted)
-            Text(formatTime(model.seconds)).font(Fonts.nunito(18)).foregroundStyle(Palette.muted).monospacedDigit()
+            Text(formatTime(model.seconds)).font(Fonts.nunito(18 * s)).foregroundStyle(Palette.muted).monospacedDigit()
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 6)
+        .padding(.horizontal, 12 * s)
+        .padding(.vertical, 6 * s)
         .background(Palette.white, in: Capsule())
-        .overlay(Capsule().strokeBorder(Palette.track, lineWidth: 2))
+        .overlay(Capsule().strokeBorder(Palette.track, lineWidth: 2 * s))
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("timer")
     }
@@ -144,6 +147,7 @@ private struct TimerPill: View {
 
 private struct AnswerBox: View {
     let state: CardsState
+    @Environment(\.uiScale) private var s
 
     var body: some View {
         let (text, color): (String, Color) = switch state.feedback {
@@ -156,17 +160,17 @@ private struct AnswerBox: View {
         case .correct: Palette.goodBorder
         default: Palette.line
         }
-        let shape = RoundedRectangle(cornerRadius: 26, style: .continuous)
+        let shape = RoundedRectangle(cornerRadius: 26 * s, style: .continuous)
         Text(text)
-            .font(Fonts.baloo(72))
+            .font(Fonts.baloo(72 * s))
             .foregroundStyle(color)
             .lineLimit(1)
             .minimumScaleFactor(32 / 72)
-            .digitsOnly(72)
-            .padding(.horizontal, 12)
-            .frame(width: 220, height: 104)
+            .digitsOnly(72 * s)
+            .padding(.horizontal, 12 * s)
+            .frame(width: 220 * s, height: 104 * s)
             .background(Palette.white, in: shape)
-            .overlay(shape.strokeBorder(border, lineWidth: 4))
+            .overlay(shape.strokeBorder(border, lineWidth: 4 * s))
             .accessibilityElement()
             .accessibilityLabel("Your answer")
             .accessibilityValue(state.input)
@@ -180,14 +184,15 @@ private struct Pill: View {
     let ink: Color
     var icon: Icon?
     var small = false
+    @Environment(\.uiScale) private var s
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: 8 * s) {
             if let icon { IconView(icon: icon, size: 22, color: ink) }
-            Text(text).font(Fonts.nunito(small ? 17 : 20)).foregroundStyle(ink)
+            Text(text).font(Fonts.nunito((small ? 17 : 20) * s)).foregroundStyle(ink)
         }
-        .padding(.horizontal, small ? 20 : 18)
-        .padding(.vertical, small ? 12 : 10)
+        .padding(.horizontal, (small ? 20 : 18) * s)
+        .padding(.vertical, (small ? 12 : 10) * s)
         .background(background, in: Capsule())
     }
 }
