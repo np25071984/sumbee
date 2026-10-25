@@ -2,11 +2,11 @@
 
 ## 1. Executive Summary
 
-Sumbee is a **free, offline Android app for daily arithmetic practice, for kids aged 5–12.** The child (or a parent, once) picks how big the numbers go, which operations to practice and how many cards, then taps Start. The child answers each card on a big on-screen keypad and at the end sees their score and time. That is the whole product.
+Sumbee is a **free, offline app for Android and iPhone for daily arithmetic practice, for kids aged 5–12.** The child (or a parent, once) picks how big the numbers go, which operations to practice and how many cards, then taps Start. The child answers each card on a big on-screen keypad and at the end sees their score and time. That is the whole product.
 
 The name, chosen 2026-10-08, is "sum" plus "spelling bee": a math bee. The icon is a bee with a plus on its back. A Google Play search that day found no math app with the name, only an unrelated "Sumbee.mn". A trademark search is still to do before M3.
 
-It started for one child: a 2nd grader whose school asks for math practice every day. **If it works for them, it ships free to everyone on Google Play** (§5.4). That decision is what this project exists to make.
+It started for one child: a 2nd grader whose school asks for math practice every day. **If it works for them, it ships free to everyone** (§5.4). That decision is what this project exists to make. It worked, so Sumbee is going to Google Play and the App Store (§5.5).
 
 Its wedge:
 
@@ -107,15 +107,18 @@ The child uses it for the daily school practice. There are no analytics (§1.1),
 * Anything slow or confusing.
 
 ### 5.3 M3: Public release
-Free on Google Play, enrolled in the Designed for Families program. Before submitting:
+Free on Google Play, enrolled in the Designed for Families program, and on the App Store. Before submitting:
 * the performance budgets (FR-7) are met on the reference device;
 * the privacy policy is published;
-* the Families declarations are complete (§6).
+* the Families declarations and the App Store privacy label are complete (§6).
 
 ### 5.4 The decision gate (end of M2)
 * **Go (publish):** used on at least 5 days a week for 3 consecutive weeks, without being pushed toward it, and with no recurring complaint left unfixed.
 * **Iterate:** used, but with one specific recurring complaint. Fix it, then run one more week of M2.
 * **Stop:** avoided even after a fix. The app stays a family app and isn't published.
+
+### 5.5 Outcome
+**Go.** The first child used Sumbee for the daily school practice without being pushed, and parents in the class asked for it. The Play closed test has run since 0.1 (2026-10-08): 0.2 kept the screen on during cards and lowered the range minimum to 5, and 0.3 capped × and ÷ at the times tables. Production access on Play was applied for on 2026-10-25. The iOS port in `ios/` (`IMPLEMENTATION.md` §8), once undecided, ships too, from the same version.
 
 ---
 
@@ -125,6 +128,7 @@ Free on Google Play, enrolled in the Designed for Families program. Before submi
 * **No network permission.** The app is technically unable to send anything anywhere.
 * **No ads and no third-party SDKs.** No analytics or crash reporting either, so there's nothing to disclose under COPPA beyond "we collect nothing".
 * **Google Play Families policy.** The target audience is declared as 5–12, the Data Safety form says "no data collected or shared", and a privacy policy URL is required even when the app collects nothing.
+* **App Store.** The privacy label says "Data Not Collected". On iOS the settings file is excluded from iCloud and computer backups, and the name is left out of the saved session state.
 
 ---
 
@@ -132,4 +136,3 @@ Free on Google Play, enrolled in the Designed for Families program. Before submi
 
 * **Weak-fact practice** ("give me more of the ones I missed") would need history, which §1.1 rules out. Revisit only if M2 shows a real need, and keep it on-device if so.
 * **Localization.** Strings are resources from day one (`IMPLEMENTATION.md` §4.6). Translations come after launch.
-* **iOS.** A SwiftUI port lives in `ios/` (`IMPLEMENTATION.md` §8). It has the same features, with ✕ in place of the system Back button. Publishing it is not decided. It would come after the Play decision (M3), and needs an Apple Developer account and App Store Kids Category review.
