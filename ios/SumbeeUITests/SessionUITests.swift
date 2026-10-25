@@ -17,6 +17,8 @@ final class SessionUITests: XCTestCase {
         // landscape, the shortest window an iPad gives the app. iPhone stays portrait regardless.
         let landscape = ProcessInfo.processInfo.environment["ORIENTATION"] == "landscape"
         XCUIDevice.shared.orientation = landscape ? .landscapeLeft : .portrait
+        // LANGUAGE=es (TEST_RUNNER_LANGUAGE from xcodebuild) plays the same session in Spanish.
+        if language == "es" { app.launchArguments += ["-AppleLanguages", "(es)", "-AppleLocale", "es_MX"] }
         app.launch()
     }
 
@@ -28,7 +30,7 @@ final class SessionUITests: XCTestCase {
         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 10))
         // Even then it sometimes drops one, so clear and retype until the name is whole.
         for _ in 0..<3 where name.value as? String != "Jenny" {
-            let typed = (name.value as? String).map { $0 == "Your name" ? 0 : $0.count } ?? 0
+            let typed = (name.value as? String).map { $0 == t("Your name") ? 0 : $0.count } ?? 0
             name.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: typed) + "Jenny")
         }
         XCTAssertEqual(name.value as? String, "Jenny")
@@ -40,22 +42,22 @@ final class SessionUITests: XCTestCase {
 
         app.buttons["start"].tap()
         XCTAssertEqual(text("progress"), "1 / 25")
-        XCTAssertTrue(app.staticTexts["Ready, Jenny?"].exists)
+        XCTAssertTrue(app.staticTexts[t("Ready, Jenny?")].exists)
         screenshot("02-first-card")
 
         // Card 1: right first time.
         answer(correct())
-        XCTAssertTrue(app.staticTexts["Correct!"].exists)
+        XCTAssertTrue(app.staticTexts[t("Correct!")].exists)
         waitFor("progress", "2 / 25")
 
         // Card 2: wrong, nudged, then wrong again and the answer is shown.
         let card2 = correct()
         answer(wrong(card2))
-        XCTAssertTrue(app.staticTexts["Are you sure? Check again."].exists)
+        XCTAssertTrue(app.staticTexts[t("Are you sure? Check again.")].exists)
         XCTAssertEqual(text("progress"), "2 / 25")
         screenshot("03-nudge")
         app.buttons["key.submit"].tap()
-        XCTAssertTrue(app.staticTexts["The answer is \(card2)"].exists)
+        XCTAssertTrue(app.staticTexts[t("The answer is %@", "\(card2)")].exists)
         screenshot("04-reveal")
         waitFor("progress", "3 / 25")
         screenshot("05-card")
@@ -66,15 +68,15 @@ final class SessionUITests: XCTestCase {
             if n < 25 { waitFor("progress", "\(n + 1) / 25") }
         }
         XCTAssertTrue(app.buttons["playAgain"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Jenny's score:"].exists)
-        XCTAssertEqual(app.staticTexts["score"].label, "24 out of 25")
+        XCTAssertTrue(app.staticTexts[t("Jenny's score:")].exists)
+        XCTAssertEqual(app.staticTexts["score"].label, t("24 out of 25"))
         screenshot("06-results")
 
         // Play again goes straight to a new deck; ✕ twice leaves to Setup, which kept the settings.
         app.buttons["playAgain"].tap()
         XCTAssertEqual(text("progress"), "1 / 25")
         app.buttons["exit"].tap()
-        XCTAssertTrue(app.staticTexts["Tap ✕ again to stop"].exists)
+        XCTAssertTrue(app.staticTexts[t("Tap ✕ again to stop")].exists)
         screenshot("07-exit-hint")
         app.buttons["exit"].tap()
         XCTAssertTrue(app.buttons["start"].waitForExistence(timeout: 2))
@@ -85,9 +87,9 @@ final class SessionUITests: XCTestCase {
     func testOneTapOnExitDoesNotLeave() {
         app.buttons["start"].tap()
         app.buttons["exit"].tap()
-        XCTAssertTrue(app.staticTexts["Tap ✕ again to stop"].exists)
+        XCTAssertTrue(app.staticTexts[t("Tap ✕ again to stop")].exists)
         // The hint goes after 2 s, and the next tap only arms the exit again.
-        XCTAssertTrue(app.staticTexts["Tap ✕ again to stop"].waitForNonExistence(timeout: 4))
+        XCTAssertTrue(app.staticTexts[t("Tap ✕ again to stop")].waitForNonExistence(timeout: 4))
         app.buttons["exit"].tap()
         XCTAssertTrue(app.otherElements["problem"].exists)
     }
@@ -122,6 +124,24 @@ final class SessionUITests: XCTestCase {
     private func answer(_ n: Int) {
         for ch in String(n) { app.buttons["key.\(ch)"].tap() }
         app.buttons["key.submit"].tap()
+    }
+
+    private var language: String? { ProcessInfo.processInfo.environment["LANGUAGE"] }
+
+    /// The text the app shows for `english` in the language under test (Localizable.xcstrings).
+    private func t(_ english: String, _ arg: String = "") -> String {
+        let spanish = [
+            "Your name": "Tu nombre",
+            "Ready, Jenny?": "¡Vamos, Jenny!",
+            "Correct!": "¡Correcto!",
+            "Are you sure? Check again.": "¿Lo revisas otra vez?",
+            "The answer is %@": "La respuesta es %@",
+            "Jenny's score:": "Puntos de Jenny:",
+            "24 out of 25": "24 de 25",
+            "Tap ✕ again to stop": "Toca ✕ otra vez para salir",
+        ]
+        let text = language == "es" ? spanish[english] ?? english : english
+        return text.replacingOccurrences(of: "%@", with: arg)
     }
 
     private func screenshot(_ name: String) {

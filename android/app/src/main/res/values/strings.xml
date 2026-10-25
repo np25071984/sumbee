@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Sumbee</string>
+    <string name="app_name" translatable="false">Sumbee</string>
 
     <!-- Setup (FR-1) -->
     <string name="name_label">What\'s your name?</string>
@@ -16,7 +16,7 @@
 
     <!-- Cards (FR-3) -->
     <string name="greeting">Ready, %1$s?</string>
-    <string name="progress">%1$d / %2$d</string>
+    <string name="progress" translatable="false">%1$d / %2$d</string>
     <string name="nudge">Are you sure? Check again.</string>
     <string name="correct">Correct!</string>
     <string name="reveal">The answer is %1$d</string>
