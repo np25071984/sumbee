@@ -1,6 +1,6 @@
 # Sumbee
 
-Sumbee is a free, offline Android app for daily arithmetic practice, for kids aged 5–12. You pick how big the numbers go, which operations to practise and how many cards, then tap Start. The child answers each card on a big on-screen keypad, and at the end sees their score and time. That is the whole app.
+Sumbee is a free, offline Android app for daily arithmetic practice, for kids aged 5–12. You pick how big the numbers go, which operations to practice and how many cards, then tap Start. The child answers each card on a big on-screen keypad, and at the end sees their score and time. That is the whole app.
 
 An iPhone version with the same features lives in `ios/`. It isn't on the App Store.
 

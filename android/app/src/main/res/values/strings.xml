@@ -6,7 +6,7 @@
     <string name="name_label">What\'s your name?</string>
     <string name="name_placeholder">Your name</string>
     <string name="range_label">Numbers up to</string>
-    <string name="ops_label">Practise</string>
+    <string name="ops_label">Practice</string>
     <string name="cards_label">How many cards?</string>
     <string name="start">Start</string>
     <string name="op_plus">Addition</string>
