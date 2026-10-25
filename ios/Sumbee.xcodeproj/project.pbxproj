@@ -160,6 +160,7 @@
 			knownRegions = (
 				en,
 				es,
+				pt,
 				Base,
 			);
 			mainGroup = 5B0000000000000000000100;

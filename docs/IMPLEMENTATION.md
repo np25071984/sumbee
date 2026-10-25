@@ -138,9 +138,10 @@ A `TextField` with an input filter: `Character.isLetter`, space, `-`, `'`, and a
 ### 4.6 Strings
 All text lives in `strings.xml`, with placeholders such as `results_title_named = "%1$s's score:"`, `results_title = "Your score:"` and `greeting = "Ready, %1$s?"`. That makes localization a pure translation task (`VISION.md` §7).
 
-**Languages: English and Spanish.** The app follows the system language and falls back to English for any other, with no picker of its own.
+**Languages: English, Spanish and Portuguese.** The app follows the system language and falls back to English for any other, with no picker of its own.
 * **Android:** translations are `values-<lang>/strings.xml`. `Sumbee` and the `7 / 25` progress counter are `translatable="false"`. `generateLocaleConfig` lists the languages for Android 13+'s per-app language setting, and `res/resources.properties` names English as the fallback. `TranslationsTest` fails if a language lacks a string or changes its placeholders.
-* **iOS:** `Sumbee/Resources/Localizable.xcstrings`, a String Catalog keyed by the English text, with `es` in `knownRegions`. Strings that read the same in every language are marked `shouldTranslate: false`, so Xcode shows the catalog as fully translated and flags any new string as untranslated. `LANGUAGE=es` (`TEST_RUNNER_LANGUAGE`) runs the UI test in Spanish.
+* **iOS:** `Sumbee/Resources/Localizable.xcstrings`, a String Catalog keyed by the English text, with `es` and `pt` in `knownRegions`. Strings that read the same in every language are marked `shouldTranslate: false`, so Xcode shows the catalog as fully translated and flags any new string as untranslated. `LANGUAGE=es` or `pt` (`TEST_RUNNER_LANGUAGE`) runs the UI test in that language.
+* **Portuguese** is written for Brazil but filed as plain `pt`, not `pt-BR`, so Portugal's Portuguese gets it too instead of English.
 * **Writing a translation:** use informal "tú"-style address for the child, and no word that takes the child's gender, since the app doesn't know it. So Spanish has "¡Vamos, Jenny!", not "¿Lista?". Each language writes the whole score title itself ("Puntos de Jenny:"), never the English possessive. Baloo 2 covers only Latin scripts (and Devanagari), so a Cyrillic, Greek or CJK language needs a second heading font first. A right-to-left language needs the layout mirrored and checked.
 
 ## 5. Testing

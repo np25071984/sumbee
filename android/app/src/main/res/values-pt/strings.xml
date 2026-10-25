@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Brazilian Portuguese, as "pt" so Portugal's Portuguese gets it too rather than English. "Você", and
+     no word that takes the child's gender (no "Pronto?"), since the app doesn't know it. -->
+<resources>
+    <!-- Setup (FR-1) -->
+    <string name="name_label">Qual é o seu nome?</string>
+    <string name="name_placeholder">Seu nome</string>
+    <string name="range_label">Números até</string>
+    <string name="ops_label">Praticar</string>
+    <string name="cards_label">Quantos cartões?</string>
+    <string name="start">Começar</string>
+    <string name="op_plus">Adição</string>
+    <string name="op_minus">Subtração</string>
+    <string name="op_times">Multiplicação</string>
+    <string name="op_divide">Divisão</string>
+
+    <!-- Cards (FR-3) -->
+    <string name="greeting">Vamos lá, %1$s!</string>
+    <string name="nudge">Tem certeza? Veja de novo.</string>
+    <string name="correct">Correto!</string>
+    <string name="reveal">A resposta é %1$d</string>
+    <string name="back_hint">Pressione Voltar de novo para sair</string>
+    <string name="key_delete">Apagar</string>
+    <string name="key_submit">Conferir resposta</string>
+    <string name="answer_description">Sua resposta</string>
+
+    <!-- Results (FR-4, FR-5) -->
+    <string name="results_title_named">Pontos de %1$s:</string>
+    <string name="results_title">Seus pontos:</string>
+    <string name="time">Tempo</string>
+    <string name="play_again">Jogar de novo</string>
+</resources>
