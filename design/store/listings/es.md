@@ -1,10 +1,10 @@
 # Spanish (es-MX for App Store, es-419 for Play; also fits es-ES)
 
 ## Play: app name (30)
-Sumbee: matemáticas niños
+Sumbee: matemáticas para niños
 
 ## Play: short description (80)
-Práctica diaria de matemáticas, de 5 a 12 años. Gratis, sin anuncios ni datos.
+Sumas, restas, tablas de multiplicar y divisiones para niños de 5 a 12 años.
 
 ## App Store: name (30)
 Sumbee: matemáticas niños
@@ -19,7 +19,7 @@ Matemáticas gratis y sin conexión para niños de 5 a 12 años. Un toque para e
 suma,resta,multiplicación,división,tablas,aritmética,tarjetas,tarea,escuela,primaria
 
 ## Description (4000, both stores)
-Práctica diaria de matemáticas que los niños pueden empezar sin ayuda, con un solo toque.
+Sumas, restas, tablas de multiplicar y divisiones: práctica diaria de matemáticas que su hijo puede empezar solo, con un toque.
 
 Sumbee es un ejercicio sencillo de cálculo para niños de 5 a 12 años. Elija hasta qué número llegar, qué operaciones practicar y cuántas tarjetas, y toque Empezar. Su hijo o hija responde cada tarjeta en un teclado grande y al final ve sus puntos y su tiempo. Al día siguiente, la app recuerda la configuración: abrirla y tocar Empezar.
 

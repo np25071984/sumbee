@@ -4,7 +4,7 @@
 Sumbee: matemática infantil
 
 ## Play: short description (80)
-Prática diária de matemática para crianças de 5 a 12. Grátis, sem anúncios.
+Tabuada, adição, subtração e divisão para crianças de 5 a 12 anos.
 
 ## App Store: name (30)
 Sumbee: matemática infantil
@@ -19,7 +19,7 @@ Matemática grátis e offline para crianças de 5 a 12 anos. Um toque para come�
 adição,subtração,multiplicação,divisão,tabuada,aritmética,cartões,lição de casa,escola
 
 ## Description (4000, both stores)
-Prática diária de matemática que a criança consegue começar sozinha, com um toque.
+Tabuada, continhas de adição, subtração e divisão: prática diária de matemática que a criança começa sozinha, com um toque.
 
 O Sumbee é um treino simples de contas para crianças de 5 a 12 anos. Escolha até que número ir, quais operações praticar e quantos cartões, e toque em Começar. A criança responde cada cartão em um teclado grande e, no final, vê os pontos e o tempo. No dia seguinte, o app lembra as configurações: é só abrir e tocar em Começar.
 

@@ -4,7 +4,9 @@ One file per language, ready to paste into Play Console (Grow > Store presence >
 then "Manage translations") and App Store Connect (App Information and the version page, per
 localization). Each field's limit is in its heading; `check.py` checks them all.
 
-- Play: app name 30, short description 80, full description 4000.
+- Play: app name 30, short description 80, full description 4000. No price or promotion words
+  ("free", "no ads", "best", "#1") in the name or short description: Play flags them and stops
+  promoting the app.
 - App Store: name 30, subtitle 30, promotional text 170, description 4000, keywords 100
   (comma-separated, no spaces after commas; words already in the name or subtitle needn't repeat).
 
