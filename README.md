@@ -98,6 +98,10 @@ Without those properties, release builds fall back to the debug key: they still 
 
 The master is `design/icon/sumbee-foreground.svg`. Rebuild every launcher size, the themed icon, the Play Store icon, the Play feature graphic, the iOS app icon and the bee in Setup's header with `python3 design/icon/build_icons.py` (needs `rsvg-convert`).
 
+## Website
+
+The landing page and the privacy policy are at [np25071984.github.io/sumbee](https://np25071984.github.io/sumbee/). Their sources are in `docs/` (`index.html`, `privacy/`, `img/`), served by GitHub Pages straight from `docs/` on `main`. The privacy policy URL, `/sumbee/privacy/`, is in both store listings: keep it.
+
 ## Licences
 
 Code: MIT ([`LICENSE`](LICENSE)).
