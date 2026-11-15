@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sumbee: Kids Math Practice</title>
+<meta name="description" content="Free, offline math practice for kids 5–12: addition, subtraction, times tables and division. One tap to start, a fresh deck every day, and a gentle second try on mistakes. No ads, no accounts, no data collected.">
+<meta property="og:title" content="Sumbee: Kids Math Practice">
+<meta property="og:description" content="Free, offline math practice for kids 5–12. One tap to start, a fresh deck every day, and a gentle second try on mistakes. No ads, no accounts, no data collected.">
+<meta property="og:image" content="https://np25071984.github.io/sumbee/img/og.png">
+<meta name="theme-color" content="#1B2A4A">
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Colours come from the app's palette (android/.../theme/Color.kt). */
+  :root {
+    --bg: #f3f7fc;
+    --surface: #ffffff;
+    --text: #1b2a4a;
+    --muted: #4a5875;
+    --line: #c9d6ea;
+    --sun: #ffc93c;
+    --sun-shadow: #d9a21c;
+    --link: #1f5fbf;
+    --shadow: 0 1px 2px rgba(27, 42, 74, .06), 0 10px 30px rgba(27, 42, 74, .10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111a2e;
+      --surface: #1b2a4a;
+      --text: #eef3fa;
+      --muted: #aab6cc;
+      --line: #2e4068;
+      --link: #ffc93c;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 30px rgba(0, 0, 0, .35);
+    }
+    .hero .icon { outline: 1px solid var(--line); }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 Nunito, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  main, footer { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+  a { color: var(--link); }
+  h1, h2, h3 { font-family: "Baloo 2", Nunito, system-ui, sans-serif; line-height: 1.15; }
+  h2 { font-size: 1.9rem; margin: 0 0 .8rem; }
+  h3 { font-size: 1.2rem; margin: 0 0 .3rem; }
+  p { margin: 0 0 1rem; }
+
+  .hero { padding: 64px 0 24px; text-align: center; }
+  .hero .icon { width: 112px; height: 112px; border-radius: 26px; box-shadow: var(--shadow); }
+  .hero h1 { font-size: clamp(2.6rem, 8vw, 3.8rem); font-weight: 800; margin: 16px 0 .4rem; }
+  .hero .lead { font-size: clamp(1.2rem, 3.2vw, 1.45rem); font-weight: 700; max-width: 640px; margin: 0 auto .8rem; text-wrap: balance; }
+  .hero .sub { color: var(--muted); max-width: 600px; margin: 0 auto 1.8rem; text-wrap: balance; }
+
+  /* Store badges at the same visible height. Google's PNG has built-in padding (41 px of 250 per side), cancelled with negative margins. */
+  .stores { display: flex; flex-wrap: wrap; gap: 36px 20px; justify-content: center; align-items: center; }
+  .stores a, .stores span { display: inline-block; line-height: 0; }
+  .stores .apple img { height: 56px; width: auto; }
+  .stores .google img { height: 84px; width: auto; margin: -14px; }
+  .stores .soon { position: relative; opacity: .45; }
+  .stores .soon::after {
+    content: "Coming soon"; position: absolute; left: 50%; top: 100%; transform: translateX(-50%);
+    margin-top: 6px; font-size: .8rem; line-height: 1.2; white-space: nowrap; color: var(--text); font-weight: 700;
+  }
+  .platforms { color: var(--muted); font-size: .95rem; margin: 2.4rem 0 0; }
+
+  .shots {
+    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(190px, 1fr); gap: 20px;
+    margin: 40px 0 0; padding: 8px 4px 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+  }
+  .shots figure { margin: 0; scroll-snap-align: center; }
+  .shots img {
+    display: block; width: 100%; height: auto; border-radius: 22px;
+    border: 1px solid var(--line); box-shadow: var(--shadow); background: #f3f7fc;
+  }
+  .shots figcaption { text-align: center; color: var(--muted); font-size: .9rem; margin-top: 10px; }
+
+  section { padding: 48px 0 8px; }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; }
+  .card .mark {
+    display: inline-grid; place-items: center; width: 40px; height: 40px; margin-bottom: 10px;
+    border-radius: 12px; background: var(--sun); color: #1b2a4a; box-shadow: 0 3px 0 var(--sun-shadow);
+    font: 800 1.3rem/1 "Baloo 2", Nunito, sans-serif;
+  }
+  .card p { margin: 0; color: var(--muted); }
+
+  .facts { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px 32px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .facts li { padding-left: 1.6em; position: relative; text-wrap: pretty; }
+  .facts li::before { content: "✓"; position: absolute; left: 0; font-weight: 800; color: var(--sun-shadow); }
+  .story { color: var(--muted); max-width: 680px; }
+
+  footer {
+    margin-top: 56px; padding-top: 24px; padding-bottom: 48px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: .95rem; display: flex; flex-wrap: wrap; gap: 8px 20px;
+  }
+  @media (max-width: 520px) {
+    body { font-size: 16px; }
+    .hero { padding-top: 40px; }
+    .shots { grid-auto-columns: 70%; }
+    .stores { gap: 32px 12px; }
+    .stores .apple img { height: 44px; }
+    .stores .google img { height: 66px; margin: -11px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <img class="icon" src="img/icon.svg" width="112" height="112" alt="Sumbee icon: a smiling bee with a plus on its back">
+    <h1>Sumbee</h1>
+    <p class="lead">Daily math practice for kids 5–12, one tap to start.</p>
+    <p class="sub">Addition, subtraction, times tables and division flashcards your child can start on their own. Free, offline, no ads and no data collected.</p>
+    <div class="stores">
+      <!-- Replace with <a class="apple" href="https://apps.apple.com/app/id…"> once the App Store listing is live. -->
+      <span class="apple soon" title="Coming soon to the App Store"><img src="img/app-store-badge.svg" width="168" height="56" alt="Download on the App Store (coming soon)"></span>
+      <a class="google" href="https://play.google.com/store/apps/details?id=dev.sumbee"><img src="img/google-play-badge.png" width="217" height="84" alt="Get it on Google Play"></a>
+    </div>
+    <p class="platforms">For Android 7.0+ phones and tablets, and iPhone and iPad with iOS 17+. In English, Spanish, Portuguese and Ukrainian.</p>
+  </header>
+
+  <div class="shots" role="list" aria-label="Screenshots">
+    <figure role="listitem"><img src="img/screen-01-setup.png" width="600" height="1304" loading="lazy" alt="Setup screen: a name, numbers up to 20, addition and multiplication picked, 25 cards, and a big Start button"><figcaption>Pick once, then just tap Start</figcaption></figure>
+    <figure role="listitem"><img src="img/screen-03-card.png" width="600" height="1304" loading="lazy" alt="A card with a sum, a progress counter, a timer and a big number keypad"><figcaption>A big keypad, no system keyboard</figcaption></figure>
+    <figure role="listitem"><img src="img/screen-04-nudge.png" width="600" height="1304" loading="lazy" alt="Card 6 × 6 answered 35, with a gentle “Are you sure? Check again.” message"><figcaption>A gentle second try</figcaption></figure>
+    <figure role="listitem"><img src="img/screen-05-results.png" width="600" height="1304" loading="lazy" alt="Results screen with the child's score and time and a Play again button"><figcaption>Their own score and time</figcaption></figure>
+  </div>
+
+  <section aria-labelledby="features">
+    <h2 id="features">What it does</h2>
+    <div class="features">
+      <div class="card">
+        <span class="mark" aria-hidden="true">+</span>
+        <h3>Made for daily school practice</h3>
+        <p>Any mix of + − × ÷, numbers up to 5 for beginners or up to 100 for older kids, and 25 to 100 cards. Settings are remembered, so tomorrow it's open, tap Start.</p>
+      </div>
+      <div class="card">
+        <span class="mark" aria-hidden="true">×</span>
+        <h3>A smart deck, not random numbers</h3>
+        <p>No card twice in a session, no 6 + 5 right after 6 + 4, and throwaway cards like × 1 are rare. × and ÷ stay within the times tables, up to 12 × 12.</p>
+      </div>
+      <div class="card">
+        <span class="mark" aria-hidden="true">?</span>
+        <h3>Gentle, not punishing</h3>
+        <p>A wrong answer gets a friendly “Are you sure?” and a second try. No buzzers, no red flashes, no sounds.</p>
+      </div>
+      <div class="card">
+        <span class="mark" aria-hidden="true">=</span>
+        <h3>Kid-safe math</h3>
+        <p>Answers are never negative, division always comes out even, and there's no dividing by zero.</p>
+      </div>
+      <div class="card">
+        <span class="mark" aria-hidden="true">−</span>
+        <h3>Personal</h3>
+        <p>Your child types their name once, and every session ends with their own score: “Jenny's score: 21 / 25”.</p>
+      </div>
+      <div class="card">
+        <span class="mark" aria-hidden="true">÷</span>
+        <h3>Fast on any device</h3>
+        <p>Built to feel instant even on low-cost phones and tablets, with a layout that grows to fill a big screen.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="safe">
+    <h2 id="safe">Safe by design</h2>
+    <ul class="facts">
+      <li>Free, with no ads and no in-app purchases</li>
+      <li>No accounts and no sign-up</li>
+      <li>Works fully offline, with no internet access at all</li>
+      <li>Asks for no permissions</li>
+      <li>Collects no data: the name and settings stay on the device and aren't backed up (<a href="privacy/">privacy policy</a>)</li>
+      <li>No streaks, coins or leaderboards: the score and time are the reward</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="story">
+    <h2 id="story">Why it exists</h2>
+    <p class="story">Sumbee was built by a parent for their own 2nd grader, whose school asks for math practice every day. The rule was simple: if the child kept using it without being pushed, it would be shared free with every family. They did, so here it is.</p>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Contact</h2>
+    <p>Questions, ideas or a bug to report? Open an issue at <a href="https://github.com/np25071984/sumbee/issues">github.com/np25071984/sumbee/issues</a>.</p>
+  </section>
+</main>
+
+<footer>
+  <a href="privacy/">Privacy policy</a>
+  <a href="https://github.com/np25071984/sumbee">Source on GitHub</a>
+  <a href="#contact">Contact</a>
+  <span>MIT license</span>
+</footer>
+</body>
+</html>
