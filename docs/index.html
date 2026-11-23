@@ -63,14 +63,9 @@
 
   /* Store badges at the same visible height. Google's PNG has built-in padding (41 px of 250 per side), cancelled with negative margins. */
   .stores { display: flex; flex-wrap: wrap; gap: 36px 20px; justify-content: center; align-items: center; }
-  .stores a, .stores span { display: inline-block; line-height: 0; }
+  .stores a { display: inline-block; line-height: 0; }
   .stores .apple img { height: 56px; width: auto; }
   .stores .google img { height: 84px; width: auto; margin: -14px; }
-  .stores .soon { position: relative; opacity: .45; }
-  .stores .soon::after {
-    content: "Coming soon"; position: absolute; left: 50%; top: 100%; transform: translateX(-50%);
-    margin-top: 6px; font-size: .8rem; line-height: 1.2; white-space: nowrap; color: var(--text); font-weight: 700;
-  }
   .platforms { color: var(--muted); font-size: .95rem; margin: 2.4rem 0 0; }
 
   .shots {
@@ -121,8 +116,7 @@
     <p class="lead">Daily math practice for kids 5–12, one tap to start.</p>
     <p class="sub">Addition, subtraction, times tables and division flashcards your child can start on their own. Free, offline, no ads and no data collected.</p>
     <div class="stores">
-      <!-- Replace with <a class="apple" href="https://apps.apple.com/app/id…"> once the App Store listing is live. -->
-      <span class="apple soon" title="Coming soon to the App Store"><img src="img/app-store-badge.svg" width="168" height="56" alt="Download on the App Store (coming soon)"></span>
+      <a class="apple" href="https://apps.apple.com/app/id6829839137"><img src="img/app-store-badge.svg" width="168" height="56" alt="Download on the App Store"></a>
       <a class="google" href="https://play.google.com/store/apps/details?id=dev.sumbee"><img src="img/google-play-badge.png" width="217" height="84" alt="Get it on Google Play"></a>
     </div>
     <p class="platforms">For Android 7.0+ phones and tablets, and iPhone and iPad with iOS 17+. In English, Spanish, Portuguese and Ukrainian.</p>
