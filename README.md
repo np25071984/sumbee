@@ -8,7 +8,7 @@ The name is "sum" plus "spelling bee": a math bee. The icon is a bee with a plus
 
 ## The idea
 
-Sumbee was built for one child: a 2nd grader whose school asks for math practice every day. If the child keeps using it (at least 5 days a week for 3 weeks, without being pushed), it ships free to everyone. It did, so Sumbee is on the App Store and going to Google Play.
+Sumbee was built for one child: a 2nd grader whose school asks for math practice every day. If the child keeps using it (at least 5 days a week for 3 weeks, without being pushed), it ships free to everyone. It did, so Sumbee is on the App Store and Google Play.
 
 Two rules come before everything else:
 
@@ -38,7 +38,7 @@ It is free by decision: ads would cost the speed, and a paid unlock would split 
 
 Version 0.3. The family build (M1) and the validation weeks (M2) are done, and the decision was to publish (M3).
 
-- **Google Play:** in closed testing since 0.1 (October 2026). Production access was applied for on 2026-10-25 and is under review.
+- **Google Play:** [live](https://play.google.com/store/apps/details?id=dev.sumbee), after closed testing since 0.1 (October 2026).
 - **App Store:** [live](https://apps.apple.com/app/id6829839137) since 2026-11-23, approved on the first review.
 
 ## Documentation
