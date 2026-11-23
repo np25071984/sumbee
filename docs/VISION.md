@@ -6,7 +6,7 @@ Sumbee is a **free, offline app for Android, iPhone and iPad for daily arithmeti
 
 The name, chosen 2026-10-08, is "sum" plus "spelling bee": a math bee. The icon is a bee with a plus on its back. A Google Play search that day found no math app with the name, only an unrelated "Sumbee.mn". A trademark search is still to do before M3.
 
-It started for one child: a 2nd grader whose school asks for math practice every day. **If it works for them, it ships free to everyone** (§5.4). That decision is what this project exists to make. It worked, so Sumbee is going to Google Play and the App Store (§5.5).
+It started for one child: a 2nd grader whose school asks for math practice every day. **If it works for them, it ships free to everyone** (§5.4). That decision is what this project exists to make. It worked, so Sumbee is on the App Store and going to Google Play (§5.5).
 
 Its wedge:
 
